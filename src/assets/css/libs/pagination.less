@@ -1,0 +1,50 @@
+@pagination-backgroundcolor-dark: #001529;
+@pagination-textcolor-dark: #A6ADB4;
+
+.el-pagination {
+  padding: 24px 0;
+  text-align: right;
+
+  &.is-background {
+    .btn-next {
+      margin-right: 0;
+    }
+  }
+}
+
+.el-pagination(@bc, @tc) {
+
+  &.el-pagination {
+
+    .btn-prev,
+    .btn-next {
+      background: @bc;
+    }
+
+    .el-pager {
+      li {
+        background: @bc;
+        color: @tc ;
+      }
+    }
+  }
+
+}
+
+.paginationFunc(@type) {
+  .sg-pagination {
+    .m(dark) {
+      .el-pagination(@pagination-backgroundcolor-dark, @pagination-textcolor-dark);
+
+      .el-input__inner {
+        border: none;
+      }
+    }
+
+    &--@{type} {
+      .m(@type);
+    }
+  }
+}
+
+.paginationFunc(dark);

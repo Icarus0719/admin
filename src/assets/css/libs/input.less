@@ -1,0 +1,55 @@
+@default-input-height: 32px;
+
+.el-input__inner {
+  background-color: transparent;
+}
+
+.el-input__suffix {
+  color: #595959;
+}
+
+.inputWidth(@w) {
+  &.el-input {
+    width: @w+0px;
+  }
+
+  .el-input__inner {
+    width: @w+0px;
+  }
+}
+
+.inputHeight(@h) {
+  .el-input__inner {
+    background-color: transparent;
+    height: @h+0px;
+    line-height: @h+0px;
+  }
+
+  .el-input__icon,
+  .el-input__prefix {
+    line-height: @h+0px;
+  }
+}
+
+// 设置默认高度
+.inputHeight(@default-input-height);
+
+// 定义输入框宽高设置函数
+.inputFunc(@t, @v) {
+  .sg-input {
+    .m(w) {
+      .inputWidth(@v);
+    }
+
+    .m(h) {
+      .inputHeight(@v);
+    }
+
+    &-@{t}@{v} {
+      .m(@t)
+    }
+  }
+}
+
+.inputFunc(w, 180);
+.inputFunc(w, 160);

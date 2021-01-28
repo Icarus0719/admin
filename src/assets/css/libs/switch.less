@@ -1,0 +1,14 @@
+@switch-label-color--default: #BFBFBF;
+@switch-label-color--active: #3DBD7D;
+
+.el-switch__core {
+  border-width: 0;
+}
+
+.el-switch__label {
+  color: @switch-label-color--default;
+
+  &.is-active {
+    color: @switch-label-color--active;
+  }
+}

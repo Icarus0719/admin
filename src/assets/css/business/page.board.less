@@ -1,0 +1,136 @@
+.board-notice {
+  background: #fff;
+  padding: 28px 30px 24px;
+  border-radius: 2px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.notice-text {
+  margin-top: 10px;
+}
+
+.notice-title {
+  line-height: 26px;
+  font-weight: 700;
+}
+
+.notice-content {
+  display: flex;
+  justify-content: space-between;
+  line-height: 22px;
+
+  > span:first-child {
+    flex: 1;
+    word-break: break-all;
+    margin-right: 60px;
+  }
+
+  > span:last-child {
+    width: 140px;
+  }
+}
+
+// 资料下载
+.board-file {
+  flex: 1;
+  background: #fff;
+  padding: 28px 30px 24px;
+  border-radius: 2px;
+
+  .file-title {
+    font-weight: 700;
+  }
+
+  .file-item {
+    line-height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+  }
+}
+
+// 排行
+.board-rank {
+  margin: 10px 0 20px;
+}
+
+.rank-box {
+  background: #fff;
+  border-radius: 2px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  > h4 {
+    line-height: 36px;
+    padding-left: 24px;
+    color: #fff;
+    border-radius: 4px 4px 0 0;
+  }
+
+  .rank-data {
+    flex: 1;
+    border-radius: 0 0 4px 4px;
+    display: flex;
+    flex-direction: column;
+
+    .rank-table {
+      flex: 1 0 auto;
+    }
+
+    .rank-item {
+      min-height: 40px;
+      line-height: 22px;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      padding: 0 10px;
+
+      > span {
+        display: inline-block;
+        flex: 1;
+      }
+      > span:nth-child(1) {
+        flex: none;
+      }
+    }
+    .rank-title {
+      > span:nth-child(1) {
+        flex: none;
+        width: 50px;
+      }
+    }
+    .rank-order {
+      &-1 {
+        color: #F5CF41;
+      }
+
+      &-2 {
+        color: #9C9C9C;
+      }
+
+      &-3 {
+        color: #E19449;
+      }
+    }
+    .rank-icon {
+      width: 30px;
+      height: 30px;
+      display: inline-block;
+      background-size: 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    .icon-no1 {
+      background-image: url('../../images/NO.1.png');
+    }
+    .icon-no2 {
+      background-image: url('../../images/NO.2.png');
+    }
+    .icon-no3 {
+      background-image: url('../../images/NO.3.png');
+    }
+  }
+}

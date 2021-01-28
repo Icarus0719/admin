@@ -1,0 +1,32 @@
+@default-table-row-height: 54px;
+
+.el-table {
+  flex: 0 0 auto;
+
+  &::before {
+    height: 0;
+  }
+}
+
+.el-table__header-wrapper,
+.el-table__fixed-header-wrapper {
+  th {
+    height: @default-table-row-height;
+    background: rgba(238, 240, 247, 1);
+    color: #333;
+
+    &:first-child {
+      border-radius: 4px 0px 0px 0px;
+    }
+
+    &:nth-last-child(2) {
+      border-radius: 0px 4px 0px 0px;
+    }
+  }
+}
+
+.el-table__body-wrapper，.el-table__fixed-body-wrapper {
+  .el-table__row {
+    height: @default-table-row-height;
+  }
+}

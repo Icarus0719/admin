@@ -1,0 +1,41 @@
+// box间距
+.box(@t, @s) {
+  .sg-box {
+    .m(ml) {
+      margin-left: @s+0px;
+    }
+
+    .m(mr) {
+      margin-right: @s+0px;
+    }
+
+    .m(mt) {
+      margin-top: @s+0px;
+    }
+
+    .m(mb) {
+      margin-bottom: @s+0px;
+    }
+
+    &-@{t}@{s} {
+      .m(@t)
+    }
+  }
+}
+
+// 文字
+.font(@t, @v) {
+  .sg-font {
+    .m(w) {
+      font-weight: @v;
+    }
+
+    .m(s) {
+      font-size: @v+0px;
+    }
+
+    &-@{t}@{v} {
+      .m(@t)
+    }
+  }
+}

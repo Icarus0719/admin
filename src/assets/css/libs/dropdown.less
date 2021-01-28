@@ -1,0 +1,56 @@
+@dropdown-backgroundcolor-dark: #001529;
+@dropdown-textcolor-dark: #A6ADB4;
+@dropdown-color-active: #1890ff;
+
+.el-dropdown-menu {
+  max-height: 200px;
+  overflow: auto;
+
+  .el-dropdown-menu__item {
+    line-height: 26px;
+  }
+}
+
+.el-dropdown(@bc, @tc) {
+  &.el-dropdown-menu {
+    background: @bc;
+    border: none;
+
+    .el-dropdown-menu__item.hover,
+    .el-dropdown-menu__item:hover {
+      background-color: @dropdown-color-active;
+      color: #fff;
+    }
+  }
+
+  &.el-popper {
+    .popper__arrow {
+      border-top-color: @bc;
+      border-bottom-color: @bc;
+
+      &::after {
+        border-top-color: @bc;
+        border-bottom-color: @bc;
+      }
+    }
+
+  }
+}
+
+.dropdownFunc(@type) {
+  .sg-dropdown {
+    .m(dark) {
+      .el-dropdown(@dropdown-backgroundcolor-dark, @dropdown-textcolor-dark);
+
+      .sg-dropdown-item__active {
+        color: @dropdown-color-active;
+      }
+    }
+
+    &--@{type} {
+      .m(@type);
+    }
+  }
+}
+
+.dropdownFunc(dark);

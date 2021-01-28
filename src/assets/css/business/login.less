@@ -1,0 +1,58 @@
+.login-page {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: url("../../images/login_bg.jpg") no-repeat center;
+  background-size: 100% 100%;
+
+  .login-title {
+    height: 50px;
+    line-height: 50px;
+    font-size: 36px;
+    margin-bottom: 60px;
+    text-align: center;
+    color: #505458;
+    font-weight: 600;
+  }
+
+  .login-form {
+    width: 500px;
+    position: absolute;
+    right: 15vw;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 1);
+    padding: 40px 60px;
+    border-radius: 4px;
+
+    .login-tabs {
+      line-height: 44px;
+      border-bottom: 1px solid #d9d9d9;
+      margin-bottom: 30px;
+
+      span {
+        width: 50%;
+        display: inline-block;
+        cursor: pointer;
+        text-align: center;
+      }
+
+      .actived-tab {
+        border-bottom: 2px solid #338aff;
+        color: #338aff;
+      }
+    }
+
+    .login-link {
+      display: flex;
+      height: 20px;
+      line-height: 20px;
+      margin-bottom: 30px;
+    }
+
+    .login-button {
+      width: 100%;
+      font-size: 16px;
+    }
+  }
+}

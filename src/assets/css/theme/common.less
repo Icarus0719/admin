@@ -1,0 +1,36 @@
+@import "./config/var.less";
+@import "./config/function.less";
+
+.box(ml, 10);
+.box(ml, 40);
+.box(mr, 10);
+.box(mr, 14);
+.box(mr, 20);
+.box(mr, 40);
+.box(mt, 8);
+.box(mt, 20);
+.box(mb, 8);
+.box(mb, 10);
+
+.font(s, 20);
+.font(s, 18);
+.font(w, 700);
+
+.color-active {
+    color: @text-active-color;
+}
+
+.flex-basis100 {
+    flex-basis: 100% !important;
+}
+
+.sg-table-button {
+    color: #1890FF;
+    margin-right: 8px;
+    cursor: pointer;
+    display: inline-block;
+    line-height: 22px;
+    &:last-child{
+        margin-right: 0;
+    }
+}

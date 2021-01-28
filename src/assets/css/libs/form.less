@@ -1,0 +1,51 @@
+@default-form-item-height: 40px;
+
+.el-form {
+  .el-form-item {
+    margin-bottom: 24px;
+  }
+
+  .el-date-editor,
+  .el-select {
+    width: 100%;
+  }
+
+}
+
+.formHeight(@h) {
+
+  .el-form-item__content {
+    line-height: @h+0px;
+  }
+
+  .el-input__inner {
+    height: @h+0px;
+    line-height: @h+0px;
+  }
+
+  .el-input__icon,
+  .el-input__prefix,
+  .el-form-item__label {
+    line-height: @h+0px;
+  }
+
+}
+
+.el-form {
+  .formHeight(@default-form-item-height);
+}
+
+// 定义表单中每项高度设置函数
+.formFunc(@t, @v) {
+  .sg-form {
+    .m(h) {
+      .formHeight(@v);
+    }
+
+    &-row-@{t}@{v} {
+      .m(@t)
+    }
+  }
+}
+
+.formFunc(h, 32);

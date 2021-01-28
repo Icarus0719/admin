@@ -1,0 +1,85 @@
+.static-day {
+  background: #fff;
+  padding: 28px 30px 24px;
+  border-radius: 2px;
+  height: auto;
+}
+
+.static-types {
+  display: flex;
+  margin-top: 16px;
+
+  .types-item {
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  .types-text {
+    >p:first-child {
+      font-size: 20px;
+      font-weight: 700;
+    }
+  }
+
+  .types-icon {
+    width: 68px;
+    height: 68px;
+    border-radius: 4px;
+    text-align: center;
+    line-height: 68px;
+    font-size: 32px;
+
+    &--1 {
+      background: rgba(99, 203, 244, 0.2);
+      color: rgba(99, 203, 244, 1);
+    }
+
+    &--2 {
+      background: rgba(123, 165, 253, 0.2);
+      color: rgba(123, 165, 253, 1);
+    }
+
+    &--3 {
+      background: rgba(95, 218, 138, 0.2);
+      color: rgba(95, 218, 138, 1);
+    }
+
+    &--4 {
+      background: rgba(199, 138, 239, 0.2);
+      color: rgba(199, 138, 239, 1);
+    }
+  }
+}
+
+.static-charts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.chart-box {
+  flex: 0 0 calc(50% - 5px);
+  height: 460px;
+  background: #fff;
+  border-radius: 2px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+
+  .chart-item {
+    flex: 1;
+  }
+}
+
+
+
+.chart-title {
+  height: 54px;
+  line-height: 54px;
+  padding: 0 24px;
+  border-bottom: 1px solid #e8e8e8;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

@@ -1,0 +1,23 @@
+.el-message {
+
+  &.el-message--warning,
+  &.el-message--success,
+  &.el-message--error {
+    .el-message__content {
+      white-space: nowrap;
+      color: rgba(0, 0, 0, 0.7);
+    }
+  }
+
+}
+
+.el-message.is-closable {
+
+  &.el-message--warning,
+  &.el-message--success,
+  &.el-message--error {
+    .el-message__content {
+      padding-right: 30px;
+    }
+  }
+}
