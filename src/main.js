@@ -5,12 +5,11 @@ import store from './store'
 
 import 'element-ui/lib/theme-chalk/index.css'
 import Element from 'element-ui'
-import '@/assets/css/iconfont/iconfont.css'
 import '@/assets/css/libs/index.less'
 import '@/assets/css/theme/index.less'
 import '@/assets/css/business/common.less'
 
-import '@/assets/js/myDirective.js'
+import '@/assets/js/directive.js'
 import UserInfo from '@/assets/js/userInfo.js'
 import md5 from 'js-md5'
 import {

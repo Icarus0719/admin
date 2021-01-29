@@ -53,6 +53,7 @@ export const sendSmsCodeInLogin = data => {
   return axiosGet(httpConfig.url, httpConfig.config).then(res => {
     codeMessage.dealAPIResponse(res, {
       errorText: "获取失败！",
+      successText:"验证码已发送，请注意查收！"
     });
     if (res.resultCode === 200) return res;
   });

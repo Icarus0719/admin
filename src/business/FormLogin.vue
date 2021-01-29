@@ -1,7 +1,7 @@
 <template>
   <div class="form-login">
-    <el-form :model="form" class="form-login" ref="form" :rules="GlobalRules">
-      <div class="form-login-title">后台管理平台</div>
+    <el-form :model="form" class="form-login" ref="form" :rules="formRules">
+      <div class="login-title">后台管理平台</div>
 
       <el-form-item prop="account">
         <el-input v-model.trim="form.account" placeholder="请输入账号" clearable>
@@ -19,11 +19,9 @@
           <span slot="prefix" class="el-icon-lock"></span>
         </el-input>
       </el-form-item>
-
       <el-form-item prop="imageCode">
-        <ImageCode ref="imageCode" v-model="form.imageCode" @change="getImageData"></ImageCode>
+        <ImageCode ref="imageCode" v-model="form.imageCode" @change="getImageCodeData"></ImageCode>
       </el-form-item>
-
       <el-form-item prop="phone">
         <el-input v-model="form.phone" placeholder="请输入手机号" clearable>
           <span slot="prefix" class="el-icon-phone-outline"></span>
@@ -33,8 +31,8 @@
         <SmsCode
           ref="smsCode"
           v-model="form.verifCode"
-          :disabled="!(valid_imageCode&&valid_phone)"
-          :model="form"
+          :disabled="err_imageCode||err_phone"
+          :api-params="{phone:form.phone,imageCode:form.imageCode,imageId:form.imageId}"
         ></SmsCode>
       </el-form-item>
       <el-form-item>
@@ -45,7 +43,7 @@
 </template>
 <script>
 import API from "@/api/api";
-import GlobalRules from "@/assets/js/rules";
+import { formRules } from "@/assets/js/formRules";
 import SmsCode from "@/libs/sg-smsCode.vue";
 import ImageCode from "@/libs/sg-imageCode.vue";
 
@@ -54,32 +52,30 @@ export default {
   data () {
     return {
       form: {},
-      GlobalRules,
-      valid_imageCode: false,
-      valid_phone: false
+      formRules,
+      err_imageCode: true,
+      err_phone: true
     };
   },
   watch: {
     "form.imageCode" () {
       this.$refs["form"].validateField("imageCode", err => {
-        this.valid_imageCode = err ? false : true;
+        this.err_imageCode = Boolean(err)
       });
     },
     "form.phone" () {
       this.$refs["form"].validateField("phone", err => {
-        this.valid_phone = err ? false : true;
+        this.err_phone = Boolean(err)
       });
     }
   },
   mounted () {
   },
   methods: {
-    getImageData (data) {
-      console.log(data);
+    getImageCodeData (data) {
       this.$set(this.form, "imageId", data.imageId);
     },
     confirmForm () {
-      console.log(this.form);
       this.$refs["form"].validate(async valid => {
         if (!valid) return false;
         this.submitModule();
@@ -98,11 +94,6 @@ export default {
         this.$refs.imageCode.getImageCode();
       }
     },
-    resetForm () {
-      this.$refs["form"].resetFields();
-      this.form = {};
-      this.$refs.smsCode.reset();
-    }
   }
 };
 </script>
@@ -113,12 +104,15 @@ export default {
   right: 10vw;
   top: 50%;
   transform: translateY(-50%);
-  .form-login-title {
+  .login-title {
     line-height: 50px;
     font-size: 36px;
     margin-bottom: 30px;
     text-align: center;
     color: #1387f2;
+  }
+  .login-botton {
+    width: 100%;
   }
 }
 </style>

@@ -6,7 +6,7 @@ function createRules () {
     account: [
       {
         required: true,
-        message: '请输入用户名称',
+        message: '请输入账号',
         trigger: 'change'
       },
       {
@@ -140,7 +140,7 @@ function createRules () {
     ]
   }
 }
-export const FormRules = new createRules().rules
+export const formRules = new createRules().rules
 
 export const changeLang = () => {
   return new createRules().rules
