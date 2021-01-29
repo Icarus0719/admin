@@ -20,7 +20,7 @@ const messages = {
 const lang = localStorage.getItem('erp_language')
 // Create VueI18n instance with options
 const i18n = new VueI18n({
-  locale: lang ? lang : 'ja', // set locale
+  locale: lang ? lang : 'zh', // set locale
   messages // set locale messages
 })
 

@@ -52,13 +52,15 @@ module.exports = {
   },
   devServer: {
     proxy: {
-      '/erp': {
-        target: 'http://47.97.124.253:8088/', //dev
+      '/xrcloud': {
+        target: 'http://172.16.3.182:6001/',
         changeOrigin: true,
         secure: false,
-        pathRewrite: {
-          '^/erp': ''
-        }
+      },
+      '/app/mock': {
+        target: 'http://rap2api.taobao.org/',
+        changeOrigin: true,
+        secure: false,
       },
     },
   }

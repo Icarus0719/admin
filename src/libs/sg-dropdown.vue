@@ -1,6 +1,6 @@
 <template>
   <el-dropdown
-    v-if="options.length"
+    v-if="data.length"
     @command="handleCommand"
     :placement="placement"
     :trigger="trigger"
@@ -9,18 +9,13 @@
       {{ value }}
       <i class="el-icon-arrow-down el-icon--right"></i>
     </span>
-    <el-dropdown-menu
-      :class="popperClass"
-      slot="dropdown"
-      v-loadmore="loadMoreOpt"
-    >
+    <el-dropdown-menu :class="popperClass" slot="dropdown" v-loadmore="loadMoreOpt">
       <el-dropdown-item
         :class="{ 'sg-dropdown-item__active': item.value === value }"
-        v-for="(item, index) in options"
+        v-for="(item, index) in data"
         :key="index"
         :command="item"
-        >{{ item.value }}</el-dropdown-item
-      >
+      >{{ item.value }}</el-dropdown-item>
       <slot></slot>
     </el-dropdown-menu>
   </el-dropdown>
@@ -38,23 +33,23 @@ export default {
     },
     popperClass: String,
     value: [String, Number],
-    options: {
+    data: {
       type: Array, //数组项结构[{value:ss,...key}]
-      default() {
+      default () {
         return [];
       },
     },
   },
-  data() {
+  data () {
     return {};
   },
-  mounted() {},
+  mounted () { },
   methods: {
-    handleCommand(command) {
+    handleCommand (command) {
       this.$emit("input", command.value);
       this.$emit("command", command);
     },
-    loadMoreOpt() {
+    loadMoreOpt () {
       this.$emit("loadmore");
     },
   },

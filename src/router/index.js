@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import UserInfo from '@/assets/js/userInfo.js'
 import { constantRouterMap } from '@/auth/constantRouter.js'
-import { asyncSuperAdminMap, routerMatch } from '@/auth/asyncRouter.js'
+import { routerMatch } from '@/auth/asyncRouter.js'
 import { getRootNodesByTraversUp } from '@/utils/util.about.js'
 
 // push
@@ -32,6 +32,7 @@ let matchRouters = []
 router.beforeEach((to, from, next) => {
   if (user.isLogin()) {
     if (matchRouters.length) {
+      // 登录成功，判断当前页面是否存在权限中
       const hasNodes = getRootNodesByTraversUp(
         matchRouters,
         e => e.path === to.path
@@ -44,8 +45,7 @@ router.beforeEach((to, from, next) => {
     } else {
       // 根据用户角色获取匹配的路由列表
       const permissionList = user.getInfo().privList || []
-      const matchRouterList = routerMatch(asyncSuperAdminMap, permissionList)
-      matchRouters = matchRouterList
+      matchRouters = routerMatch(permissionList)
       router.addRoutes(matchRouters)
       next({
         ...to,

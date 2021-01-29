@@ -43,10 +43,7 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   response => {
     if (response.config.loading) closeLoading()
-    if (response.data.code === 2001) {
-      codeMessage.dealAPIError(response.data)
-      user.exitLogin()
-    }
+    if (codeMessage.isUnAuth(response.data)) user.exitLogin()
     return response.data
   },
   error => {

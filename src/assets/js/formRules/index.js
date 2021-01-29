@@ -14,20 +14,9 @@ function createRules () {
         message: validate.account.message
       }
     ],
-    companyName: [
-      {
-        required: true,
-        message: '请输入公司名称',
-        trigger: 'change'
-      },
-      {
-        pattern: validate.companyName.reg,
-        message: validate.companyName.message
-      }
-    ],
     phone: [
       {
-        required: true,
+        required: false,
         message: '请输入手机号码',
         trigger: 'change'
       },
@@ -38,7 +27,7 @@ function createRules () {
     ],
     imageCode: [
       {
-        required: true,
+        required: false,
         message: '请输入图形验证码',
         trigger: 'change'
       },
@@ -49,7 +38,7 @@ function createRules () {
     ],
     verifCode: [
       {
-        required: true,
+        required: false,
         message: '请输入短信验证码',
         trigger: 'change'
       },
@@ -67,75 +56,6 @@ function createRules () {
       {
         pattern: validate.password.reg,
         message: validate.password.message
-      }
-    ],
-    roomName: [
-      {
-        required: true,
-        message: '请输入直播房间名称',
-        trigger: 'change'
-      },
-      {
-        pattern: validate.titleName.reg,
-        message: validate.titleName.message
-      }
-    ],
-    theme: [
-      {
-        required: true,
-        message: '请输入直播主题',
-        trigger: 'change'
-      },
-      {
-        pattern: validate.titleName.reg,
-        message: validate.titleName.message
-      }
-    ],
-    startTime: [
-      {
-        required: true,
-        message: '请选择直播开始时间',
-        trigger: 'blur'
-      }
-    ],
-    deviceName: [
-      {
-        required: true,
-        message: '请输入机位名称',
-        trigger: 'change'
-      },
-      {
-        pattern: validate.deviceName.reg,
-        message: validate.deviceName.message
-      }
-    ],
-    deviceType: [
-      {
-        required: true,
-        message: '请选择设备类型',
-        trigger: 'blur'
-      }
-    ],
-    marketList_name: [
-      {
-        required: false,
-        message: '请输入商品名称',
-        trigger: 'change'
-      },
-      {
-        pattern: validate.shopName.reg,
-        message: validate.shopName.message
-      }
-    ],
-    marketList_url: [
-      {
-        required: false,
-        message: '请输入商品链接',
-        trigger: 'change'
-      },
-      {
-        pattern: validate.webUrl.reg,
-        message: validate.webUrl.message
       }
     ]
   }
