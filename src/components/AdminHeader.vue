@@ -49,8 +49,8 @@ export default {
       this.dropdownValue = this.userInfo.name;
     },
     async confirmDialog () {
-      const response = await API.logout();
-      if (response) this.$user.exitLogin();
+      await API.logout();
+      this.$user.exitLogin();
     },
     toPage () {
       console.log("edit")

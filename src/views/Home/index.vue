@@ -1,10 +1,13 @@
 <template>
-  <div>首页</div>
+  <div>
+    <Dialog></Dialog>
+  </div>
 </template>
 <script>
+import Dialog from "@/libs/sg-dialog.vue";
 
 export default {
-  name: "login",
+  components: { Dialog },
   data () {
     return {};
   },

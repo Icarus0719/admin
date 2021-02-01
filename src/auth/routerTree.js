@@ -4,8 +4,8 @@ import i18n from '@/lang'
 function AdminPath () {
   this.data = [
     {
-      title: '首页',
-      path: '/index',
+      title: '弹窗组件',
+      path: '/home',
       icon: 'el-icon-notebook-1',
       children: []
     },
@@ -13,16 +13,7 @@ function AdminPath () {
       title: '用户管理',
       path: '/user',
       icon: 'el-icon-money',
-      children: [
-        {
-          title: '新增',
-          path: '/user/add'
-        },
-        {
-          title: '编辑',
-          path: '/user/edit'
-        }
-      ]
+      children: []
     },
     {
       title: '角色管理',

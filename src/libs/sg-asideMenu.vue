@@ -13,6 +13,7 @@
     background-color="#001529"
     active-text-color="#fff"
     text-color="#A6ADB4"
+    class="sg-aside"
   >
     <slot></slot>
     <template v-for="(item, index) in model">
@@ -53,24 +54,24 @@ export default {
     },
     model: {
       type: Array, //路由对象树节点值,数据结构参见auth模块的routerTree
-      default() {
+      default () {
         return [];
       },
     },
     defaultActive: String, //当前激活菜单的index
   },
-  data() {
+  data () {
     return {
       activePath: this.$route.path,
     };
   },
   watch: {
-    defaultActive(newVal) {
+    defaultActive (newVal) {
       if (newVal) {
         this.activePath = newVal;
       }
     },
   },
-  mounted() {},
+  mounted () { },
 };
 </script>

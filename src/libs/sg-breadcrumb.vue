@@ -1,29 +1,23 @@
 <template>
-  <el-breadcrumb v-if="model.length" separator="/">
-    <el-breadcrumb-item
-      v-for="(item, index) in model"
-      :key="index"
-      :to="item.path"
-    >
-      {{ item.title }}
-    </el-breadcrumb-item>
+  <el-breadcrumb v-if="data.length" separator="/">
+    <el-breadcrumb-item v-for="(item, index) in data" :key="index" :to="item.path">{{ item.title }}</el-breadcrumb-item>
   </el-breadcrumb>
 </template>
 <script>
 export default {
   props: {
-    model: {
+    data: {
       type: Array, //路由对象树节点值,数据结构参见auth模块的routerTree
-      default() {
+      default () {
         return [];
       },
     },
   },
-  data() {
+  data () {
     return {};
   },
   watch: {},
-  mounted() {},
+  mounted () { },
   methods: {},
 };
 </script>

@@ -4,8 +4,7 @@
       :model="asideData"
       :collapse="isCollapse"
       :default-active="asideActivePath"
-      class="sg-aside"
-      :style="{ width: isCollapse ? '64px' : '220px', overflow: 'auto' }"
+      :style="{ width: isCollapse ? '64px' : '220px' }"
     >
       <div class="aside-logo" v-if="!isCollapse">后台管理系统</div>
     </AsideMenu>
@@ -15,15 +14,14 @@
           slot="collapse"
           class="sg-font-s20 pointer"
           :class="isCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"
-          @click="collapseOpt"
+          @click="isCollapse = !isCollapse"
         ></div>
       </Header>
-      <Breadcrumb :model="breadData" v-if="showBread"></Breadcrumb>
+      <Breadcrumb :data="breadData"></Breadcrumb>
       <div class="main-box">
         <router-view class="content-main" />
       </div>
     </div>
-    <el-backtop target=".main-box"></el-backtop>
   </div>
 </template>
 <script>
@@ -43,7 +41,6 @@ export default {
       asideData: superAdminPathList,
       isCollapse: false,
       breadData: [],
-      showBread: true,
       asideActivePath: "",
     };
   },
@@ -62,36 +59,14 @@ export default {
     this.initTreeData(this.$route);
   },
   methods: {
-    collapseOpt () {
-      this.isCollapse = !this.isCollapse;
-    },
     initTreeData (route) {
-      // 对详情，事务审核，保证金审核页面做过滤
-      let filters = [];
-      if (
-        filters.some((e) => {
-          return route.path.indexOf(e) > -1;
-        })
-      ) {
-        this.showBread = false;
-      } else {
-        this.showBread = true;
-      }
-
       const treeData = getRootNodesByTraversUp(
         this.asideData,
         (e) => e.path === route.path
       );
       if (!treeData.length) return;
       this.breadData = treeData;
-      if (
-        treeData.length > 2 ||
-        (treeData.slice(-2, -1)[0] && treeData.slice(-2, -1)[0].asideFold)
-      ) {
-        this.asideActivePath = treeData.slice(-2, -1)[0].path;
-      } else {
-        this.asideActivePath = treeData.slice(-1)[0].path;
-      }
+      this.asideActivePath = treeData.slice(-1)[0].path;
     },
   },
 };
