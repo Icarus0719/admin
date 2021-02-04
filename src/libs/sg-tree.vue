@@ -11,6 +11,8 @@
     :expand-on-click-node="expandOnClickNode"
     :default-expand-all="defaultExpandAll"
     :render-content="renderContent"
+    :filter-node-method="filterNode"
+    :current-node-key="currentNodeKey"
     @node-click="handleNodeClick"
     @check="handleCheck"
   >
@@ -21,24 +23,27 @@ import {
   getAllCheckedNodesByTraversDown,
   getRootNodesByTraversUp,
   newSetArrayByKey,
-} from "@/assets/js/utils/util.about.js";
+} from "@/utils/util.about.js";
 export default {
   props: {
     props: {
       type: Object, //配置选项
-      default() {
-        return {};
+      default () {
+        return {
+          children: "children",
+          label: "label"
+        };
       },
     },
     model: {
       type: Array, //树形结构数据，形如[{node:{...},children:[]},...]
-      default() {
+      default () {
         return [];
       },
     },
     showCheckbox: {
       type: Boolean, //节点是否可选
-      default: true,
+      default: false,
     },
     highlightCurrent: {
       type: Boolean, //是否高亮当前选中节点
@@ -54,31 +59,35 @@ export default {
     },
     defaultExpandAll: {
       type: Boolean, //是否默认展开所有节点
-      default: false,
+      default: true,
     },
-    nodeKey: String, //节点唯一性标识
+    nodeKey: {
+      type: String, //节点唯一性标识
+      required: true
+    },
+    currentNodeKey: [String, Number],//当前选中的节点key值
     renderContent: Function, //树节点的内容区的渲染函数
   },
-  data() {
+  data () {
     return {
       data: [],
       defaultCheckedKeys: [],
     };
   },
   watch: {
-    model(newVal) {
+    model (newVal) {
       this.data = newVal || [];
       this.setNodeKey();
       this.setCheckedKeys();
     },
   },
-  mounted() {},
+  mounted () { },
   methods: {
     // 为node设置唯一key字段
-    setNodeKey() {
+    setNodeKey () {
       const self = this;
       trverse(this.data);
-      function trverse(tree) {
+      function trverse (tree) {
         for (let e of tree) {
           if (e[self.nodeKey]) return;
           e[self.nodeKey] = e.node[self.nodeKey];
@@ -89,7 +98,7 @@ export default {
       }
     },
     // 设置选中节点
-    setCheckedKeys() {
+    setCheckedKeys () {
       if (!this.showCheckbox) return;
       this.defaultCheckedKeys = [];
       // 所有选中的节点
@@ -130,17 +139,25 @@ export default {
       });
     },
     // 点击节点事件
-    handleNodeClick(data) {
+    handleNodeClick (data) {
       this.$emit("node-click", data);
     },
-    handleCheck(data, checked) {
+    handleCheck (data, checked) {
       // 获取选中节点+半选节点
       const checkedNodes = checked.checkedNodes.concat(
         checked.halfCheckedNodes
       );
       this.$emit("check", checkedNodes);
     },
-    _setCurrentKey(key) {
+    filterNode (value, data) {
+      if (!value) return true;
+      return data[this.props.label].indexOf(value) !== -1;
+    },
+    filter (val) {
+      console.log(val)
+      this.$refs.tree.filter(val);
+    },
+    _setCurrentKey (key) {
       this.$refs.tree.setCurrentKey(key);
     },
   },
