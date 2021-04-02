@@ -35,7 +35,7 @@ export default {
     },
     layout: {
       type: String,
-      default: "total, sizes, prev, pager, next",
+      default: 'total, sizes, prev, pager, next',
     },
   },
   watch: {
@@ -56,14 +56,14 @@ export default {
     sizeChange(size) {
       this.curPageSize = size;
       this.currentPage = 1;
-      this.$emit("change", {
+      this.$emit('change', {
         pageNum: this.currentPage,
         pageSize: this.curPageSize,
       });
     },
     pageChange(page) {
       this.currentPage = page;
-      this.$emit("change", {
+      this.$emit('change', {
         pageNum: this.currentPage,
         pageSize: this.curPageSize,
       });

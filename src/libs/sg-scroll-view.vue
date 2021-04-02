@@ -29,13 +29,13 @@ export default {
   },
   beforeDestroy() {
     this.srcollDom &&
-      this.srcollDom.removeEventListener("scroll", this.scrollFunc);
+      this.srcollDom.removeEventListener('scroll', this.scrollFunc);
   },
   mounted() {
     this.$nextTick(() => {
       this.srcollDom = this.$refs.scroll;
       if (this.srcollDom) {
-        this.srcollDom.addEventListener("scroll", this.scrollFunc);
+        this.srcollDom.addEventListener('scroll', this.scrollFunc);
       }
     });
   },
@@ -52,7 +52,7 @@ export default {
         this.srcollDom.clientHeight;
       if (this.isToLower) {
         // 滚动到底部
-        this.$emit("toLower");
+        this.$emit('toLower');
       }
     },
   },

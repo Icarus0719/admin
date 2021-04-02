@@ -30,7 +30,58 @@
     cursor: pointer;
     display: inline-block;
     line-height: 22px;
-    &:last-child{
+
+    &:last-child {
         margin-right: 0;
+    }
+}
+
+/* flex 占位 */
+.sg-flex-space {
+    flex: 1;
+}
+
+/* 多行文字缩略 */
+.sg-multi-ellipsis {
+    display: -webkit-box;
+    word-break: break-all;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+/* 单行缩略 */
+.sg-single-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* box左侧竖线 */
+.sg-left-border {
+    position: relative;
+}
+
+.sg-left-border::before {
+    content: "";
+    width: 1px;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    background: rgba(98, 113, 153, 1);
+}
+
+.empty-data[data-emptyText] {
+    &::before {
+        content: attr(data-emptyText);
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }

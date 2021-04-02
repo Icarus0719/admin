@@ -9,50 +9,55 @@
     >
       <span slot="prefix" class="el-icon-picture-outline"></span>
     </el-input>
-    <img class="sg-imagecode-btn" :src="imageCodeUrl" alt="图片" @click="getImageCode()" />
+    <img
+      class="sg-imagecode-btn"
+      :src="imageCodeUrl"
+      alt="图片"
+      @click="getImageCode()"
+    />
   </div>
 </template>
 <script>
-import API from "@/api/api";
+import API from '@/api/api';
 export default {
   props: {
-    value: [Number, String]
+    value: [Number, String],
   },
-  data () {
+  data() {
     return {
-      imageCodeUrl: "",
+      imageCodeUrl: '',
       Attributes: {
-        imageCode: "",
-        imageId: ""
-      }
+        imageCode: '',
+        imageId: '',
+      },
     };
   },
   watch: {
-    value (newVal) {
+    value(newVal) {
       this.Attributes.imageCode = newVal;
     },
-    "Attributes.imageId" () {
-      this.$emit("change", this.Attributes);
-    }
+    'Attributes.imageId'() {
+      this.$emit('change', this.Attributes);
+    },
   },
-  mounted () {
+  mounted() {
     this.getImageCode();
   },
   methods: {
-    async getImageCode () {
+    async getImageCode() {
       this.Attributes.imageId = new Date().getTime();
       const params = {
         imageWidth: 90,
         imageHeight: 40,
-        imageId: this.Attributes.imageId
+        imageId: this.Attributes.imageId,
       };
-      const response = await API.getImageCode(params)
+      const response = await API.getImageCode(params);
       if (response) {
         this.imageCodeUrl && window.URL.revokeObjectURL(this.imageCodeUrl);
         this.imageCodeUrl = window.URL.createObjectURL(response);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="less" scoped>

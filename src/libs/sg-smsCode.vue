@@ -12,63 +12,65 @@
       class="sg-smscode-btn"
       @click="clickOpt"
       :disabled="Attributes.disabled"
-    >{{timeOpened?`已发送${timeAccount}s`:"获取短信验证码"}}</el-button>
+      >{{ timeOpened ? `已发送${timeAccount}s` : '获取短信验证码' }}</el-button
+    >
   </div>
 </template>
 <script>
-import API from "@/api/api";
+import API from '@/api/api';
 
 export default {
   props: {
     value: [String, Number],
     disabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     apiName: {
       type: String, //远程发送信息验证码接口名
-      default: "sendSmsCodeInLogin"
+      default: 'sendSmsCodeInLogin',
     },
-    apiParams: { //发送短信所需参数选项
+    apiParams: {
+      //发送短信所需参数选项
       type: Object,
-      default () {
-        return {}
-      }
+      default() {
+        return {};
+      },
     },
   },
-  data () {
+  data() {
     return {
       Attributes: {
-        smsCode: "",
-        disabled: true //是否禁用
+        smsCode: '',
+        disabled: true, //是否禁用
       },
-      timeNumber: 10,//倒计时数值，单位s
+      timeNumber: 10, //倒计时数值，单位s
       timeAccount: 0,
-      timeOpened: false,//倒计时是否开启
-      timerId: null
+      timeOpened: false, //倒计时是否开启
+      timerId: null,
     };
   },
   watch: {
-    value (newVal) {
+    value(newVal) {
       this.Attributes.smsCode = newVal;
     },
-    disabled (newVal) {
+    disabled(newVal) {
       this.Attributes.disabled = newVal;
     },
   },
-  mounted () { },
+  mounted() {},
   methods: {
-    clickOpt () {
-      if (this.timeOpened) return
+    clickOpt() {
+      if (this.timeOpened) return;
       this.sendSmsCode();
-      this.$emit("click");
+      this.$emit('click');
     },
-    async sendSmsCode () {
+    async sendSmsCode() {
       const response = await API[this.apiName](this.apiParams);
       if (response) this.addTimeClock();
     },
     // 添加定时器
-    addTimeClock () {
+    addTimeClock() {
       this.timeOpened = true;
       this.timeAccount = this.timeNumber;
       this.timerId && clearInterval(this.timerId);
@@ -82,16 +84,16 @@ export default {
       }, 1000);
 
       this.$once('hook:beforeDestroy', () => {
-        this.timerId && clearInterval(this.timerId)
-      })
+        this.timerId && clearInterval(this.timerId);
+      });
     },
-    clear () {
+    clear() {
       this.Attributes.disabled = false;
       this.timeOpened = false;
-      this.Attributes.smsCode = "";
+      this.Attributes.smsCode = '';
       this.timerId && clearInterval(this.timerId);
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="less" scoped>

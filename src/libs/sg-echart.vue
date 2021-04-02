@@ -2,21 +2,21 @@
   <div ref="echartDom"></div>
 </template>
 <script>
-var echarts = require("echarts");
+var echarts = require('echarts');
 export default {
   props: {
     option: Object,
-    loading: Boolean
+    loading: Boolean,
   },
   data() {
     return {
       loadingStyle: {
-        text: "loading",
-        color: "#fff",
-        textColor: "#fff",
-        maskColor: "rgba(0,0,0,0.3)"
+        text: 'loading',
+        color: '#fff',
+        textColor: '#fff',
+        maskColor: 'rgba(0,0,0,0.3)',
       },
-      Echart: null
+      Echart: null,
     };
   },
   watch: {
@@ -31,8 +31,8 @@ export default {
       handler() {
         this.renderEchart();
       },
-      deep: true
-    }
+      deep: true,
+    },
   },
   beforeDestroy() {
     this.Echart && echarts.dispose(this.Echart);
@@ -43,14 +43,14 @@ export default {
       this.loading && this.Echart.showLoading(this.loadingStyle);
     });
 
-    window.addEventListener("resize", () => {
+    window.addEventListener('resize', () => {
       this.Echart.resize();
     });
   },
   methods: {
     renderEchart() {
       this.Echart.setOption(this.option);
-    }
-  }
+    },
+  },
 };
 </script>

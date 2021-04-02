@@ -28,15 +28,15 @@
   </div>
 </template>
 <script>
-import API from "@/api/api";
+import API from '@/api/api';
 export default {
   model: {
-    event: "change",
+    event: 'change',
   },
   props: {
     placeholder: {
       type: String,
-      default: "请选择",
+      default: '请选择',
     },
     value: [String, Number, Array, Object],
     isSelectItem: {
@@ -64,11 +64,11 @@ export default {
     },
     optionLabel: {
       type: String, //option的label名称
-      default: "label",
+      default: 'label',
     },
     optionValue: {
       type: String, //option的value名称
-      default: "value",
+      default: 'value',
     },
     apiName: {
       type: String, //远程服务查询接口名称
@@ -76,7 +76,7 @@ export default {
     },
     apiParams: {
       type: [String, Number, Object], //接口查询参数
-      default () {
+      default() {
         return {};
       },
     },
@@ -90,10 +90,10 @@ export default {
     },
     valueKey: {
       type: String, //选中项为对象时的唯一标识key
-      default: "optionValue"
+      default: 'optionValue',
     },
   },
-  data () {
+  data() {
     return {
       selectValue: null,
       srcollDom: null,
@@ -104,41 +104,41 @@ export default {
       isToLower: false, // 滚动节流
       scrollHeight: 0,
       loading: false,
-      isInitRequest: true,// 首次远程请求
+      isInitRequest: true, // 首次远程请求
     };
   },
   computed: {
-    requestParam () {
+    requestParam() {
       let param = JSON.parse(JSON.stringify(this.apiParams));
       return param;
     },
   },
   watch: {
-    value (newVal) {
+    value(newVal) {
       this.selectValue = newVal;
     },
-    selectValue (newVal) {
-      this.$emit("change", newVal, this._getNode(newVal));
+    selectValue(newVal) {
+      this.$emit('change', newVal, this._getNode(newVal));
     },
-    apiParams (newVal, oldVal) {
+    apiParams(newVal, oldVal) {
       // 这里不直接用newVal判断，是因为select发生change时会触发watch
       if (JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
-        this.selectValue = this.isInitRequest ? this.selectValue : "";
-        this.resetRequest()
+        this.selectValue = this.isInitRequest ? this.selectValue : '';
+        this.resetRequest();
       }
     },
-    scrollHeight (newVal) {
+    scrollHeight(newVal) {
       if (newVal || newVal === 0) {
         // 新值--说明内容有增减，需重新设置节流
         this.isToLower = false;
       }
     },
   },
-  mounted () {
+  mounted() {
     this.immediate && this.getTableData();
   },
   methods: {
-    async getTableData (more = false) {
+    async getTableData(more = false) {
       if (!this.apiName) return false;
 
       let params = this.requestParam;
@@ -167,58 +167,60 @@ export default {
       this.isInitRequest = false;
     },
     // 弹窗添加滚动条事件，ps:弹窗不要插入到body中，否则无法找到对应的dom
-    async addScrollListener () {
+    async addScrollListener() {
       await this.$nextTick();
-      if (!this.$refs["select"]) return;
-      const selectDom = this.$refs["select"].$el;
-      this.srcollDom = selectDom.querySelector(".el-select-dropdown__wrap");
+      if (!this.$refs['select']) return;
+      const selectDom = this.$refs['select'].$el;
+      this.srcollDom = selectDom.querySelector('.el-select-dropdown__wrap');
       if (this.srcollDom) {
-        this.srcollDom.addEventListener("scroll", this.scrollFunc);
-        this.$once("hook:beforeDestroy", () => {
-          this.srcollDom.removeEventListener("scroll", this.scrollFunc);
+        this.srcollDom.addEventListener('scroll', this.scrollFunc);
+        this.$once('hook:beforeDestroy', () => {
+          this.srcollDom.removeEventListener('scroll', this.scrollFunc);
         });
       }
     },
-    scrollFunc () {
+    scrollFunc() {
       this.scrollHeight = this.srcollDom.scrollHeight;
       // 节流
       if (this.isToLower) return;
 
       this.isToLower =
         this.srcollDom.scrollHeight -
-        this.srcollDom.scrollTop -
-        Number(this.lowerThreshold) <=
+          this.srcollDom.scrollTop -
+          Number(this.lowerThreshold) <=
         this.srcollDom.clientHeight;
       if (this.isToLower) {
         // 滚动到底部,加载更多
         this.loadMore();
       }
     },
-    loadMore () {
+    loadMore() {
       if (this.optionData.length < this.totalRecords) {
         this.pageNum++;
         this.getTableData(true);
       }
     },
-    changeOpt (data) {
-      this.$emit("change", data, this._getNode(data));
+    changeOpt(data) {
+      this.$emit('change', data, this._getNode(data));
     },
-    _getNode (data) {
-      return data ? this.optionData.filter(e => {
-        return e[this.optionValue] === data
-      })[0] : {}
+    _getNode(data) {
+      return data
+        ? this.optionData.filter((e) => {
+            return e[this.optionValue] === data;
+          })[0]
+        : {};
     },
-    visibleOpt (visible) {
+    visibleOpt(visible) {
       !visible && this.resetRequest();
     },
-    resetRequest (val = null) {
-      if (!this.remote) return
-      if (this.requestParam[this.optionLabel] === val) return
-      this.requestParam[this.optionLabel] = val
+    resetRequest(val = null) {
+      if (!this.remote) return;
+      if (this.requestParam[this.optionLabel] === val) return;
+      this.requestParam[this.optionLabel] = val;
       this.pageNum = 1;
       this.getTableData();
     },
-    remoteMethod (data) {
+    remoteMethod(data) {
       this.resetRequest(data);
     },
   },

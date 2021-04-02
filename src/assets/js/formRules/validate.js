@@ -72,17 +72,15 @@ export const chargeNum = {
 }
 export const money = {
   reg: /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/,
-  // message: "格式不正确"
-  message: 'Validation error'
+  message: "格式不正确"
 }
 export const area = {
   reg: /(^[1-9]([0-9]+)?(\.[0-9]+)?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/,
-  // message: "格式不正确"
-  message: 'Validation error'
+  message: "格式不正确"
 }
 
 export const personName = {
-  // reg: /^([a-zA-Z]|[\u4e00-\u9fa5]){1,10}$/,
+  reg: /^([a-zA-Z]|[\u4e00-\u9fa5]){1,10}$/,
   message: '名称为中英文1-10个字符'
 }
 export const title = {

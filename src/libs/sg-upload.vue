@@ -51,8 +51,8 @@
   </div>
 </template>
 <script>
-import * as API from "@/api/api.file.js";
-import lrz from "lrz"; //压缩图片插件
+import * as API from '@/api/api.file.js';
+import lrz from 'lrz'; //压缩图片插件
 
 export default {
   props: {
@@ -70,7 +70,7 @@ export default {
     accept: {
       type: String, //文件格式
       default:
-        ".txt,.ppt,.pptx,.doc,.docx,.pdf,.zip,.rar,.xlsx,.xls,.png,.jpg,.jpeg,.gif,.bmp", //文件格式
+        '.txt,.ppt,.pptx,.doc,.docx,.pdf,.zip,.rar,.xlsx,.xls,.png,.jpg,.jpeg,.gif,.bmp', //文件格式
     },
     limit: {
       type: Number, //最大允许上传个数
@@ -82,7 +82,7 @@ export default {
     },
     listType: {
       type: String, //文件列表的类型
-      default: "text",
+      default: 'text',
     },
     remote: {
       type: Boolean, //是否上传远程服务器
@@ -98,7 +98,7 @@ export default {
     },
     action: {
       type: String, //上传服务器的接口名
-      default: "uploadFile",
+      default: 'uploadFile',
     },
     apiParams: {
       type: Object, //接口参数
@@ -109,11 +109,11 @@ export default {
   },
   data() {
     return {
-      fileType: "picture", //上传文件的类型
+      fileType: 'picture', //上传文件的类型
       fileList: [], //上传的文件列表
       uploadDisabled: this.disabled, //是否禁用上传
       compressable: false, //是否压缩图片
-      currentImageUrl: "", //当前展示的图片地址
+      currentImageUrl: '', //当前展示的图片地址
     };
   },
   watch: {
@@ -122,27 +122,27 @@ export default {
         if (
           newVal.toLocaleLowerCase().search(/\.(png|jpg|jpeg|gif|bmp)$/) > -1
         ) {
-          this.fileType = "text";
+          this.fileType = 'text';
         } else {
-          this.fileType = "text";
+          this.fileType = 'text';
         }
       },
       immediate: true,
     },
     fileList(newVal) {
       if (!newVal.length) {
-        this.currentImageUrl = "";
+        this.currentImageUrl = '';
         return false;
       }
-      if (this.fileType === "picture") {
+      if (this.fileType === 'picture') {
         if (newVal[newVal.length - 1].fileUrl) {
           this.currentImageUrl = newVal[newVal.length - 1].fileUrl;
         }
       }
       if (newVal[0].fileId) {
-        this.$emit("input", newVal[0].fileId);
+        this.$emit('input', newVal[0].fileId);
       }
-      this.$emit("getFiles", newVal);
+      this.$emit('getFiles', newVal);
     },
     model: {
       handler(newVal) {
@@ -164,7 +164,7 @@ export default {
   methods: {
     clickUpload() {
       // 打开上传窗口之前，点击按钮事件
-      this.$emit("click");
+      this.$emit('click');
     },
     handleExceed() {
       this.$message.warning(`最多允许上传${this.limit}个文件`);
@@ -190,18 +190,18 @@ export default {
     },
     // 上传文件校验
     preCheckFile(file) {
-      const formats = this.accept.toLocaleLowerCase().split(",");
+      const formats = this.accept.toLocaleLowerCase().split(',');
       const rightFile = formats.some((e) => {
         return file.raw.name.toLocaleLowerCase().search(e);
       });
       if (!rightFile) {
-        this.$message({ message: "文件格式不正确", type: "warning" });
+        this.$message({ message: '文件格式不正确', type: 'warning' });
         return false;
       }
       if (file.raw.size / 1024 / 1024 > this.size) {
         this.$message({
           message: `文件大小不能超过${this.size}M`,
-          type: "warning",
+          type: 'warning',
         });
         return false;
       }
@@ -212,7 +212,7 @@ export default {
       if (!file.raw) return false;
       let compressFormData = await this.compressImageOpt(file);
       let formData = compressFormData || new FormData();
-      formData.append("file", file.raw);
+      formData.append('file', file.raw);
       if (Object.keys(this.apiParams).length) {
         for (let key in this.apiParams) {
           formData.append(key, this.apiParams[key]);
@@ -227,12 +227,12 @@ export default {
     },
     // 压缩图片
     async compressImageOpt(file) {
-      if (this.fileType !== "picture") return false;
+      if (this.fileType !== 'picture') return false;
       if (!this.compressable) return false;
       if (Math.ceil(file.raw.size / 1024 / 1024) <= 1) return false;
       const File = file.raw;
       if (File.type.search(/png|jpg|jpeg|bmp$/) > -1) {
-        const res = await lrz(File, { fieldName: "file" });
+        const res = await lrz(File, { fieldName: 'file' });
         if (res && res.formData) {
           return res.formData;
         } else {

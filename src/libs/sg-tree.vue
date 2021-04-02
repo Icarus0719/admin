@@ -23,21 +23,21 @@ import {
   getAllCheckedNodesByTraversDown,
   getRootNodesByTraversUp,
   newSetArrayByKey,
-} from "@/utils/util.about.js";
+} from '@/utils/util.about.js';
 export default {
   props: {
     props: {
       type: Object, //配置选项
-      default () {
+      default() {
         return {
-          children: "children",
-          label: "label"
+          children: 'children',
+          label: 'label',
         };
       },
     },
     model: {
       type: Array, //树形结构数据，形如[{node:{...},children:[]},...]
-      default () {
+      default() {
         return [];
       },
     },
@@ -63,31 +63,31 @@ export default {
     },
     nodeKey: {
       type: String, //节点唯一性标识
-      required: true
+      required: true,
     },
-    currentNodeKey: [String, Number],//当前选中的节点key值
+    currentNodeKey: [String, Number], //当前选中的节点key值
     renderContent: Function, //树节点的内容区的渲染函数
   },
-  data () {
+  data() {
     return {
       data: [],
       defaultCheckedKeys: [],
     };
   },
   watch: {
-    model (newVal) {
+    model(newVal) {
       this.data = newVal || [];
       this.setNodeKey();
       this.setCheckedKeys();
     },
   },
-  mounted () { },
+  mounted() {},
   methods: {
     // 为node设置唯一key字段
-    setNodeKey () {
+    setNodeKey() {
       const self = this;
       trverse(this.data);
-      function trverse (tree) {
+      function trverse(tree) {
         for (let e of tree) {
           if (e[self.nodeKey]) return;
           e[self.nodeKey] = e.node[self.nodeKey];
@@ -98,7 +98,7 @@ export default {
       }
     },
     // 设置选中节点
-    setCheckedKeys () {
+    setCheckedKeys() {
       if (!this.showCheckbox) return;
       this.defaultCheckedKeys = [];
       // 所有选中的节点
@@ -121,7 +121,7 @@ export default {
         nodes.pop();
         oldRootNodes = oldRootNodes.concat(nodes);
       });
-      let newRootNodes = newSetArrayByKey(oldRootNodes, "privId");
+      let newRootNodes = newSetArrayByKey(oldRootNodes, 'privId');
       //比较选中节点中是否存在未选中的父节点，去除这些半叶节点
       for (let i = isCheckedNodes.length - 1; i >= 0; i--) {
         let e = isCheckedNodes[i];
@@ -139,25 +139,25 @@ export default {
       });
     },
     // 点击节点事件
-    handleNodeClick (data) {
-      this.$emit("node-click", data);
+    handleNodeClick(data) {
+      this.$emit('node-click', data);
     },
-    handleCheck (data, checked) {
+    handleCheck(data, checked) {
       // 获取选中节点+半选节点
       const checkedNodes = checked.checkedNodes.concat(
         checked.halfCheckedNodes
       );
-      this.$emit("check", checkedNodes);
+      this.$emit('check', checkedNodes);
     },
-    filterNode (value, data) {
+    filterNode(value, data) {
       if (!value) return true;
       return data[this.props.label].indexOf(value) !== -1;
     },
-    filter (val) {
-      console.log(val)
+    filter(val) {
+      console.log(val);
       this.$refs.tree.filter(val);
     },
-    _setCurrentKey (key) {
+    _setCurrentKey(key) {
       this.$refs.tree.setCurrentKey(key);
     },
   },

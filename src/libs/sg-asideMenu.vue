@@ -47,31 +47,31 @@
 <script>
 export default {
   props: {
-    collapse: Boolean,//是否折叠收起
+    collapse: Boolean, //是否折叠收起
     uniqueOpened: {
       type: Boolean, //是否只保持一个子菜单的展开
       default: true,
     },
     model: {
       type: Array, //路由对象树节点值,数据结构参见auth模块的routerTree
-      default () {
+      default() {
         return [];
       },
     },
     defaultActive: String, //当前激活菜单的index
   },
-  data () {
+  data() {
     return {
       activePath: this.$route.path,
     };
   },
   watch: {
-    defaultActive (newVal) {
+    defaultActive(newVal) {
       if (newVal) {
         this.activePath = newVal;
       }
     },
   },
-  mounted () { },
+  mounted() {},
 };
 </script>

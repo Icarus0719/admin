@@ -11,44 +11,44 @@
 <script>
 export default {
   model: {
-    event: "change"
+    event: 'change',
   },
   props: {
     placeholder: {
       type: String,
-      default: "请选择"
+      default: '请选择',
     },
     props: {
       type: Object,
       default() {
         return {};
-      }
+      },
     },
     options: {
       type: Array,
       default() {
         return [];
-      }
+      },
     },
     value: [String, Number, Array],
-    disabled: Boolean
+    disabled: Boolean,
   },
   data() {
     return {
-      selectValue: ""
+      selectValue: '',
     };
   },
   watch: {
     value(newVal) {
       this.selectValue = newVal;
-    }
+    },
   },
   mounted() {},
   methods: {
     changeOpt($event) {
       if (!$event) return false;
-      this.$emit("change", $event[$event.length - 1]);
-    }
-  }
+      this.$emit('change', $event[$event.length - 1]);
+    },
+  },
 };
 </script>
