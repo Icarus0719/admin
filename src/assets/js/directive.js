@@ -15,6 +15,35 @@ Vue.directive('oneClick', {
     })
   }
 })
+// 判断image标签加载图片是否成功，成功则赋值src属性，否则使用默认图片
+Vue.directive('successImage', {
+  inserted: async (el, binding) => {
+    const url = binding.value;
+    if (url) {
+      const isExist = await imageIsExist(url);
+      if (isExist) {
+        el.setAttribute('src', url);
+      }
+    }
+
+    function imageIsExist(url) {
+      return new Promise((resolve) => {
+        let img = new Image();
+        img.onload = function() {
+          if (this.complete) {
+            resolve(true);
+            img = null;
+          }
+        };
+        img.onerror = function() {
+          resolve(false);
+          img = null;
+        };
+        img.src = url;
+      });
+    }
+  },
+});
 // 数据操作权限
 Vue.directive('allow', {
   inserted(el, binding, vnode) {
