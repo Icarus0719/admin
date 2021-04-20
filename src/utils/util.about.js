@@ -5,8 +5,21 @@ export const uuid = () => {
   function S4() {
     return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
   }
-  return (S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4());
-}
+  return (
+    S4() +
+    S4() +
+    '-' +
+    S4() +
+    '-' +
+    S4() +
+    '-' +
+    S4() +
+    '-' +
+    S4() +
+    S4() +
+    S4()
+  );
+};
 /**
  * @method round 小数舍入
  * @param {Number} number 输入数字
@@ -14,7 +27,7 @@ export const uuid = () => {
  */
 export const round = (number, precision) => {
   return Math.round(+number + 'e' + precision) / Math.pow(10, precision);
-}
+};
 /**
  * @method getUrlParam 获取url的传参
  */
@@ -30,40 +43,40 @@ export const getUrlParam = (hash, key) => {
     }
   }
   return result;
-}
+};
 /**
  * @method clearKeyInObject 去掉对象中的空值属性
  */
 export const clearKeyInObject = (obj) => {
   for (let key in obj) {
     if (!obj[key] && obj[key] !== 0) {
-      delete obj[key]
+      delete obj[key];
     }
   }
-}
+};
 /**
  * @method newSetArrayByKey 数组对象属性去重
  * @param array 数组
  * @param key 属性名,string
  */
 export const newSetArrayByKey = (arr, key) => {
-  if (Object.prototype.toString.call(arr) !== "[object Array]") return []
+  if (Object.prototype.toString.call(arr) !== '[object Array]') return [];
   let obj = {};
   let newArr = arr.reduce((item, next) => {
-    obj[next[key]] ? "" : (obj[next[key]] = true && item.push(next));
+    obj[next[key]] ? '' : (obj[next[key]] = true && item.push(next));
     return item;
   }, []);
-  return newArr
-}
+  return newArr;
+};
 /**
  * @method groupArrayByKey 数组对象按对象属性分组
  * @param array 数组
  * @param f 回调函数，e=>e.key
  */
 export const groupArrayByKey = (array, f) => {
-  if (Object.prototype.toString.call(array) !== "[object Array]") return []
+  if (Object.prototype.toString.call(array) !== '[object Array]') return [];
   let groups = {};
-  array.forEach(o => {
+  array.forEach((o) => {
     let group = JSON.stringify(f(o));
     groups[group] = groups[group] || [];
     groups[group].push(o);
@@ -71,43 +84,43 @@ export const groupArrayByKey = (array, f) => {
   return Object.keys(groups).map((group) => {
     return groups[group];
   });
-}
+};
 /**
  * @method groupArrayByValue 数组对象按对象值分组
  * @param array 数组
  * @param f 回调函数，e=>e.key===value
  */
 export const groupArrayByValue = (array, f) => {
-  if (Object.prototype.toString.call(array) !== "[object Array]") return []
+  if (Object.prototype.toString.call(array) !== '[object Array]') return [];
   let newArray = [];
-  array.forEach(e => {
+  array.forEach((e) => {
     let isTrue = f(e);
     if (isTrue) {
-      newArray.push(e)
+      newArray.push(e);
     }
   });
-  return newArray
-}
+  return newArray;
+};
 /**
  * @method handlePhone 手机号脱敏
  */
 export const handlePhone = (str) => {
   const pho = /(\d{3})\d*(\d{4})/;
-  return str.replace(pho, "$1****$2")
-}
+  return str.replace(pho, '$1****$2');
+};
 /**
  * @method copyText 一键复制
  */
 export const copyText = (dom) => {
   const text = dom.innerText;
-  const inputDom = document.createElement("input");
+  const inputDom = document.createElement('input');
   inputDom.value = text;
   document.body.appendChild(inputDom);
   inputDom.select();
   let SUCCESS = true;
   try {
     if (document.execCommand('copy', false, null)) {
-      document.execCommand("Copy");
+      document.execCommand('Copy');
       SUCCESS = true;
     } else {
       SUCCESS = false;
@@ -116,8 +129,8 @@ export const copyText = (dom) => {
     SUCCESS = false;
   }
   document.body.removeChild(inputDom);
-  return SUCCESS
-}
+  return SUCCESS;
+};
 /**
  * @method getRootNodesByTraversUp 向上遍历获取符合条件节点的所有根节点
  * @param treeData 树形数组
@@ -125,21 +138,21 @@ export const copyText = (dom) => {
  */
 export const getRootNodesByTraversUp = (treeData, f) => {
   function traverse(tree, func, checkedNodes = []) {
-    if (Object.prototype.toString.call(tree) !== "[object Array]") return false
-    if (typeof func !== "function") return false
+    if (Object.prototype.toString.call(tree) !== '[object Array]') return false;
+    if (typeof func !== 'function') return false;
     for (let node of tree) {
       checkedNodes.push(node);
-      if (func(node)) return checkedNodes
+      if (func(node)) return checkedNodes;
       if (node.children && node.children.length) {
         const findChildren = traverse(node.children, func, checkedNodes);
-        if (findChildren.length) return findChildren
+        if (findChildren.length) return findChildren;
       }
       checkedNodes.pop();
     }
-    return []
+    return [];
   }
   return traverse(treeData, f);
-}
+};
 /**
  * @method getAllCheckedNodesByTraversDown 向下遍历获取树形结构中符合条件的所有节点
  * @param treeData 树形数组
@@ -147,8 +160,8 @@ export const getRootNodesByTraversUp = (treeData, f) => {
  */
 export const getAllCheckedNodesByTraversDown = (treeData, f) => {
   function traverse(tree, func, checkedNodes = []) {
-    if (Object.prototype.toString.call(tree) !== "[object Array]") return false
-    if (typeof func !== "function") return false
+    if (Object.prototype.toString.call(tree) !== '[object Array]') return false;
+    if (typeof func !== 'function') return false;
     for (let i = 0; i < tree.length; i++) {
       let node = tree[i];
       if (func(node)) {
@@ -157,9 +170,62 @@ export const getAllCheckedNodesByTraversDown = (treeData, f) => {
       if (node.children && node.children.length) {
         traverse(node.children, func, checkedNodes);
       }
-
     }
-    return checkedNodes
+    return checkedNodes;
   }
   return traverse(treeData, f);
-}
+};
+/**
+ * @method deepClone 复杂对象深拷贝
+ * @param obj
+ */
+export const deepClone = (obj) => {
+  function copy(obj) {
+    if (obj === null) return null;
+    if (typeof obj !== 'object') return obj;
+    if (obj.constructor === Date) return new Date(obj);
+    if (obj.constructor === RegExp) return new RegExp(obj);
+    var newObj = new obj.constructor(); //保持继承链
+    for (var key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        //不遍历其原型链上的属性
+        var val = obj[key];
+        newObj[key] = typeof val === 'object' ? copy(val) : val;
+      }
+    }
+    return newObj;
+  }
+  return copy(obj);
+};
+/**
+ *防抖实现----事件触发n秒后在执行回调，n秒内又触发则重新计时
+ *应用场景：输入框连续输入完之后再去请求ajax、滚动条事件
+ * @param {*} func
+ * @param {number} [delay=2000]
+ */
+export const debounce = (func, delay = 3000) => {
+  return function() {
+    clearTimeout(func.timeId);
+    func.timeId = setTimeout(() => {
+      func.apply(this, arguments);
+    }, delay);
+  };
+};
+
+/**
+ *节流：单位事件内多次触发事件，只执行一次回调
+ *场景：鼠标不断点击，只触发一次、无限加载滚动页面时，每隔一段时间发送ajax
+ * @param {*} func
+ * @param {number} [delay=2000]
+ */
+// export const throttle = (func, delay = 5000) => {
+//   let valid = true
+//   return function () {
+//     if (!valid) return
+//     valid = false
+//     setTimeout(() => {
+//       func.apply(this, arguments)
+//       valid = true
+//     }, delay)
+//   }
+// }
