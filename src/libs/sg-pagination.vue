@@ -1,7 +1,6 @@
 <template>
   <el-pagination
     v-if="total > 0"
-    :small="small"
     background
     @size-change="sizeChange"
     @current-change="pageChange"
@@ -9,7 +8,7 @@
     :page-sizes="pageSizes"
     :page-size="curPageSize"
     :popper-class="popperClass"
-    :layout="layout"
+    layout="total, sizes, prev, pager, next"
     :total="total"
   ></el-pagination>
 </template>
@@ -29,14 +28,6 @@ export default {
     pageNum: Number,
     pageSize: Number,
     popperClass: String,
-    small: {
-      type: Boolean,
-      default: false,
-    },
-    layout: {
-      type: String,
-      default: 'total, sizes, prev, pager, next',
-    },
   },
   watch: {
     pageNum(newVal) {
@@ -55,18 +46,15 @@ export default {
   methods: {
     sizeChange(size) {
       this.curPageSize = size;
-      this.currentPage = 1;
-      this.$emit('change', {
-        pageNum: this.currentPage,
-        pageSize: this.curPageSize,
-      });
+      this.$emit('update:pageNum', 1);
+      this.$emit('update:pageSize', this.curPageSize);
+      this.$emit('change');
     },
     pageChange(page) {
       this.currentPage = page;
-      this.$emit('change', {
-        pageNum: this.currentPage,
-        pageSize: this.curPageSize,
-      });
+      this.$emit('update:pageNum', this.currentPage);
+      this.$emit('update:pageSize', this.curPageSize);
+      this.$emit('change');
     },
   },
 };

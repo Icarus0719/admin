@@ -50,7 +50,7 @@
 import { Message } from 'element-ui';
 export default {
   props: {
-    value: Array, // 文件列表
+    value: Array, // 文件列表数据[{name,fileUrl,fileId}]
     size: {
       type: Number,
       default: 2, // 文件允许的最大体积，单位:M
@@ -69,18 +69,18 @@ export default {
     },
     showFilelList: {
       type: Boolean,
-      default: true, // 是否显示上传文件列表
+      default: false, // 是否显示上传文件列表
     },
     listType: {
       type: String,
       default: 'text', // 文件列表的类型
     },
-    httpRequest: {
-      type: Function, // 远程上传服务器函数,函数参数是file对象
-    },
     autoUpload: {
       type: Boolean, // 是否在选取文件后立即进行上传
-      default: true,
+      default: false,
+    },
+    httpRequest: {
+      type: Function, // 远程上传服务器函数,函数参数是file对象
     },
   },
   data() {
@@ -182,6 +182,7 @@ export default {
   &-image {
     width: 138px;
     height: 104px;
+    position: relative;
     background: rgba(250, 250, 250, 1);
     border-radius: 4px;
     border: 1px solid rgba(217, 217, 217, 1);

@@ -1,30 +1,28 @@
 <template>
-  <div>
-    <el-select
-      ref="select"
-      v-model="selectValue"
-      :placeholder="placeholder"
-      :popper-class="popperClass"
-      :multiple="multiple"
-      :filterable="filterable"
-      :remote="remote"
-      :class="selectClass"
-      :popper-append-to-body="false"
-      @change="changeOpt"
-      @visible-change="visibleOpt"
-      :remote-method="remoteMethod"
-      clearable
-      :disabled="disabled"
-      :value-key="valueKey"
-    >
-      <el-option
-        v-for="item in optionData"
-        :key="item[optionValue]"
-        :label="item[optionLabel]"
-        :value="selectItem ? item : item[optionValue]"
-      ></el-option>
-    </el-select>
-  </div>
+  <el-select
+    ref="select"
+    v-model="selectValue"
+    :placeholder="placeholder"
+    :popper-class="popperClass"
+    :multiple="multiple"
+    :filterable="filterable"
+    :remote="remote"
+    :class="selectClass"
+    :popper-append-to-body="false"
+    @change="changeOpt"
+    @visible-change="visibleOpt"
+    :remote-method="remoteMethod"
+    clearable
+    :disabled="disabled"
+    :value-key="valueKey"
+  >
+    <el-option
+      v-for="item in optionData"
+      :key="item[optionValue]"
+      :label="item[optionLabel]"
+      :value="selectItem ? item : item[optionValue]"
+    ></el-option>
+  </el-select>
 </template>
 <script>
 export default {
@@ -37,24 +35,11 @@ export default {
       default: '请选择',
     },
     value: [String, Number, Array, Object],
-    selectItem: {
-      type: Boolean, // 是否获取整个item
-      default: false,
-    },
-    selectClass: String,
-    popperClass: String,
-    disabled: Boolean,
-    multiple: {
-      type: Boolean, // 是否支持多选
-      default: false,
-    },
-    filterable: {
-      type: Boolean, // 是否可搜索
-      default: true,
-    },
-    remote: {
-      type: Boolean, //是否远程搜索
-      default: true,
+    optionData: {
+      type: Array, // 选择器数据
+      default() {
+        return [];
+      },
     },
     optionLabel: {
       type: String, // option的label名称
@@ -64,9 +49,9 @@ export default {
       type: String, // option的value名称
       default: 'value',
     },
-    lowerThreshold: {
-      type: [String, Number], // 距底部多远触发scrollFunc
-      default: 0,
+    selectItem: {
+      type: Boolean, // 是否获取整个item
+      default: false,
     },
     valueKey: {
       type: String, // 选中项为对象时的唯一标识key
@@ -74,17 +59,30 @@ export default {
         return this.optionValue;
       },
     },
-    optionData: {
-      type: Array, // 选择器数据
-      default() {
-        return [];
-      },
+    selectClass: String,
+    popperClass: String,
+    disabled: Boolean,
+    multiple: {
+      type: Boolean, // 是否支持多选
+      default: true,
     },
-    infiniteScroll: {
-      type: Function, // 无限滚动函数
+    filterable: {
+      type: Boolean, // 是否可搜索
+      default: false,
+    },
+    remote: {
+      type: Boolean, // 是否远程搜索
+      default: false,
     },
     remoteMethod: {
       type: Function, // 远程搜索函数
+    },
+    lowerThreshold: {
+      type: [String, Number], // 距底部多远触发scrollFunc
+      default: 0,
+    },
+    scrollMethod: {
+      type: Function, // 无限滚动函数
     },
   },
   data() {
@@ -107,7 +105,7 @@ export default {
     },
   },
   mounted() {
-    this.infiniteScroll && this.addScrollListener();
+    this.scrollMethod && this.addScrollListener();
   },
   methods: {
     // 弹窗添加滚动条事件，ps:弹窗不要插入到body中，否则无法找到对应的dom
@@ -134,7 +132,7 @@ export default {
         this.srcollDom.clientHeight;
       if (this.isToLower) {
         // 滚动到底部,加载更多
-        this.infiniteScroll();
+        this.scrollMethod();
       }
     },
     changeOpt(data) {
