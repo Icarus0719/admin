@@ -17,9 +17,9 @@
 </template>
 <script>
 import * as API from "@/api/api.account.js";
-import Dialog from "@/libs/sg-dialog.vue";
-import Dropdown from "@/libs/sg-dropdown.vue";
-import ChangeLang from "@/components/ChangeLang.vue";
+import Dialog from "@/element-ui-libs/sg-dialog.vue";
+import Dropdown from "@/element-ui-libs/sg-dropdown.vue";
+import ChangeLang from "@/components/TheLangButton.vue";
 
 export default {
   components: { Dialog, Dropdown, ChangeLang },

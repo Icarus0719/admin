@@ -25,9 +25,9 @@
   </div>
 </template>
 <script>
-import Header from "@/components/AdminHeader.vue";
-import AsideMenu from "@/libs/sg-aside-menu.vue";
-import Breadcrumb from "@/libs/sg-breadcrumb.vue";
+import Header from "@/components/TheHeader.vue";
+import AsideMenu from "@/element-ui-libs/sg-aside-menu.vue";
+import Breadcrumb from "@/element-ui-libs/sg-breadcrumb.vue";
 import { superAdminPathList, changeLang } from "@/auth/routerTree.js";
 import { getRootNodesByTraversUp } from "@/utils/util.about.js";
 export default {
