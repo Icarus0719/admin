@@ -1,5 +1,5 @@
 // 侧边栏，面包屑等路由内容的树形数据结构
-import i18n from '@/lang';
+import i18n from '@/element-ui-lang';
 
 function AdminPath() {
   this.data = [

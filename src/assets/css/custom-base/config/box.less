@@ -1,5 +1,5 @@
 // box间距
-.box(@t, @s) {
+.boxFunc(@t, @s) {
   .sg-box {
     .m(ml) {
       margin-left: @s+0px;
@@ -18,23 +18,6 @@
     }
 
     &-@{t}@{s} {
-      .m(@t)
-    }
-  }
-}
-
-// 文字
-.font(@t, @v) {
-  .sg-font {
-    .m(w) {
-      font-weight: @v;
-    }
-
-    .m(s) {
-      font-size: @v+0px;
-    }
-
-    &-@{t}@{v} {
       .m(@t)
     }
   }

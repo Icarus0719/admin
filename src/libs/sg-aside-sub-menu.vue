@@ -32,7 +32,7 @@ export default {
   },
 };
 </script>
-<style >
+<style module>
 .sg-menu-icon {
   width: 18px;
 }

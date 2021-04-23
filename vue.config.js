@@ -5,33 +5,30 @@ const path = require('path'),
 module.exports = {
   publicPath: './', //  解决打包之后静态文件路径404的问题
   productionSourceMap: false,
-  chainWebpack: config => {
-    config.resolve.alias
-      .set('@', path.resolve(__dirname, 'src'))
+  chainWebpack: (config) => {
+    config.resolve.alias.set('@', path.resolve(__dirname, 'src'));
 
     config.module
       .rule('images')
       .use('url-loader')
       .loader('url-loader')
-      .tap(options => Object.assign(options, {
-        limit: 10240
-      }));
+      .tap((options) =>
+        Object.assign(options, {
+          limit: 10240,
+        })
+      );
 
     if (isProduction) {
-      config.output
-        .filename('[name].[chunkhash].js')
+      config.output.filename('[name].[chunkhash].js');
     }
   },
   pluginOptions: {
     'style-resources-loader': {
       preProcessor: 'less',
-      patterns: [
-        path.resolve(__dirname, './src/assets/css/variable.less'),
-      ]
-    }
+      patterns: [path.resolve(__dirname, './src/assets/css/variable.less')],
+    },
   },
-  configureWebpack: config => {
-
+  configureWebpack: (config) => {
     if (isProduction) {
       // 生产环境js代码压缩，console、debugger调试语句删除
       // config.plugins.push(
@@ -48,7 +45,6 @@ module.exports = {
       //   })
       // )
     }
-
   },
   devServer: {
     proxy: {
@@ -63,5 +59,5 @@ module.exports = {
         secure: false,
       },
     },
-  }
-}
+  },
+};

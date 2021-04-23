@@ -44,8 +44,8 @@
 <script>
 import API from "@/api/api";
 import { formRules } from "@/assets/js/formRules";
-import SmsCode from "@/libs/sg-smsCode.vue";
-import ImageCode from "@/libs/sg-imageCode.vue";
+import SmsCode from "@/libs/sg-sms-code.vue";
+import ImageCode from "@/libs/sg-image-code.vue";
 
 export default {
   components: { SmsCode, ImageCode },

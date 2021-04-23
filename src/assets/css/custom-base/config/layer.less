@@ -1,19 +1,19 @@
 // 容器均分列布局
-.layer-box {
+.sg-layer {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 
-  &-space {
+  &--space {
     height: 0;
     margin: 0;
   }
 }
 
 // @c:列数，@s:每列间距
-.boxLayer(@c, @s) {
+.layerFunc(@c, @s) {
 
-  .layer-row-@{c} {
+  .sg-layer-row-@{c} {
     width: 0; //这是个小技巧，flex特性，如果不设width:0，那么子元素内容是会优先被撑开，文字不会出现隐藏
     min-width: 0; //兼容火狐浏览器
     position: relative;
@@ -22,8 +22,3 @@
     flex-basis: calc((100% - @s)/@c);
   }
 }
-
-.boxLayer(5, 80px);
-.boxLayer(4, 30px);
-.boxLayer(2, 20px);
-.boxLayer(1, 0px);

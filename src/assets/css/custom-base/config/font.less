@@ -1,0 +1,16 @@
+// 文字
+.fontFunc(@t, @v) {
+  .sg-font {
+    .m(w) {
+      font-weight: @v;
+    }
+
+    .m(s) {
+      font-size: @v+0px;
+    }
+
+    &-@{t}@{v} {
+      .m(@t)
+    }
+  }
+}
