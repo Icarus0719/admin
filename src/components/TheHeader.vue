@@ -3,44 +3,51 @@
     <slot name="collapse"></slot>
     <li class="flex-space"></li>
     <li class="user-item">
-      <ChangeLang></ChangeLang>
       <span class="el-icon-user sg-box-mr10"></span>
       <Dropdown :value="dropdownValue" :data="dropdownData" class="sg-box-mr10">
-        <div class="el-icon-edit dropdown-edit" @click="toPage">&nbsp;{{ $t("User.edit") }}</div>
+        <div class="el-icon-edit dropdown-edit" @click="toPage">
+          &nbsp;{{ $t('User.edit') }}
+        </div>
       </Dropdown>
-      <span class="el-icon-switch-button pointer" @click="dialogVisible = true"></span>
+      <span
+        class="el-icon-switch-button pointer"
+        @click="dialogVisible = true"
+      ></span>
     </li>
 
     <!-- 退出弹窗 -->
-    <Dialog title="确定要退出登录吗？" :visible.sync="dialogVisible" @confirm="confirmDialog"></Dialog>
+    <Dialog
+      title="确定要退出登录吗？"
+      :visible.sync="dialogVisible"
+      @confirm="confirmDialog"
+    ></Dialog>
   </ul>
 </template>
 <script>
-import * as API from "@/api/api.account.js";
-import Dialog from "@/element-ui-libs/sg-dialog.vue";
-import Dropdown from "@/element-ui-libs/sg-dropdown.vue";
-import ChangeLang from "@/components/TheLangButton.vue";
+import * as API from '@/api/api.account.js';
+import Dialog from '@/element-ui-libs/sg-dialog.vue';
+import Dropdown from '@/element-ui-libs/sg-dropdown.vue';
 
 export default {
-  components: { Dialog, Dropdown, ChangeLang },
-  data () {
+  components: { Dialog, Dropdown },
+  data() {
     return {
       dialogVisible: false,
       dropdownData: [],
-      dropdownValue: "",
+      dropdownValue: '',
     };
   },
-  mounted () {
+  mounted() {
     this.userInfo = this.$user.getInfo();
     this.setDropdownData();
   },
   methods: {
-    setDropdownData () {
+    setDropdownData() {
       const showLabels = [
-        { text: "用户：", keyName: "name" },
-        { text: "公司：", keyName: "deptName" },
-        { text: "电话：", keyName: "phone" },
-        { text: "邮箱：", keyName: "email" },
+        { text: '用户：', keyName: 'name' },
+        { text: '公司：', keyName: 'deptName' },
+        { text: '电话：', keyName: 'phone' },
+        { text: '邮箱：', keyName: 'email' },
       ];
       showLabels.forEach((e) => {
         const item = `${e.text}${this.userInfo[e.keyName] || '--'}`;
@@ -48,12 +55,12 @@ export default {
       });
       this.dropdownValue = this.userInfo.name;
     },
-    async confirmDialog () {
+    async confirmDialog() {
       await API.logout();
       this.$user.exitLogin();
     },
-    toPage () {
-      console.log("edit")
+    toPage() {
+      console.log('edit');
     },
   },
 };

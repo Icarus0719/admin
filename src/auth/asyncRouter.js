@@ -18,7 +18,7 @@ export const asyncSuperAdminMap = [
     path: '/404',
     name: '404',
     meta: {},
-    component: () => import('@/components/404.vue'),
+    component: () => import('@/views/common/404.vue'),
   },
 ];
 /**

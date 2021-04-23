@@ -49,7 +49,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/xrcloud': {
-        target: 'http://172.16.3.182:6001/',
+        target: 'http://172.16.3.194:6001/',
         changeOrigin: true,
         secure: false,
       },

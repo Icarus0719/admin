@@ -2,7 +2,7 @@
   <div class="sg-imagecode">
     <el-input
       type="text"
-      v-model="Attributes.imageCode"
+      :value="value"
       @input="$emit('input', $event)"
       placeholder="请输入图片验证码"
       clearable
@@ -11,53 +11,24 @@
     </el-input>
     <img
       class="sg-imagecode-btn"
-      :src="imageCodeUrl"
+      :src="imageUrl"
       alt="图片"
-      @click="getImageCode()"
+      @click="remoteMethod"
     />
   </div>
 </template>
 <script>
-import API from '@/api/api';
 export default {
   props: {
     value: [Number, String],
+    imageUrl: String,
+    remoteMethod: Function,
   },
   data() {
-    return {
-      imageCodeUrl: '',
-      Attributes: {
-        imageCode: '',
-        imageId: '',
-      },
-    };
+    return {};
   },
-  watch: {
-    value(newVal) {
-      this.Attributes.imageCode = newVal;
-    },
-    'Attributes.imageId'() {
-      this.$emit('change', this.Attributes);
-    },
-  },
-  mounted() {
-    this.getImageCode();
-  },
-  methods: {
-    async getImageCode() {
-      this.Attributes.imageId = new Date().getTime();
-      const params = {
-        imageWidth: 90,
-        imageHeight: 40,
-        imageId: this.Attributes.imageId,
-      };
-      const response = await API.getImageCode(params);
-      if (response) {
-        this.imageCodeUrl && window.URL.revokeObjectURL(this.imageCodeUrl);
-        this.imageCodeUrl = window.URL.createObjectURL(response);
-      }
-    },
-  },
+  mounted() {},
+  methods: {},
 };
 </script>
 <style lang="less" scoped>

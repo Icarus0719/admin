@@ -7,11 +7,6 @@
 import i18n from '@/element-ui-lang';
 
 export default {
-  data() {
-    return {};
-  },
-
-  mounted() {},
   methods: {
     changeLangOpt(isZh) {
       this.$i18n.locale = isZh ? 'ja' : 'zh';
@@ -21,7 +16,7 @@ export default {
   },
 };
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .language-btn {
   cursor: pointer;
   margin: 0 20px;

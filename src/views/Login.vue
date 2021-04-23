@@ -1,16 +1,14 @@
 <template>
   <div class="login">
-    <TheLangButton />
-    <FormLogin></FormLogin>
+    <FormLogin />
   </div>
 </template>
 <script>
-import FormLogin from '@/business/FormLogin.vue';
-import TheLangButton from '@/components/TheLangButton.vue';
+import FormLogin from '@/views/form/FormLogin.vue';
 
 export default {
   name: 'login',
-  components: { FormLogin, TheLangButton },
+  components: { FormLogin },
   data() {
     return {};
   },

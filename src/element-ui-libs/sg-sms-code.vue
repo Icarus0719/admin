@@ -1,24 +1,19 @@
 <template>
   <div class="sg-smscode">
     <el-input
-      v-model="Attributes.smsCode"
+      :value="value"
       @input="$emit('input', $event)"
       placeholder="请输入短信验证码"
       clearable
     >
       <span slot="prefix" class="el-icon-message"></span>
     </el-input>
-    <el-button
-      class="sg-smscode-btn"
-      @click="clickOpt"
-      :disabled="Attributes.disabled"
-      >{{ timeOpened ? `已发送${timeAccount}s` : '获取短信验证码' }}</el-button
-    >
+    <el-button class="sg-smscode-btn" @click="clickOpt" :disabled="disabled">{{
+      timeOpened ? `已发送${timeAccount}s` : '获取短信验证码'
+    }}</el-button>
   </div>
 </template>
 <script>
-import API from '@/api/api';
-
 export default {
   props: {
     value: [String, Number],
@@ -26,48 +21,25 @@ export default {
       type: Boolean,
       default: false,
     },
-    apiName: {
-      type: String, //远程发送信息验证码接口名
-      default: 'sendSmsCodeInLogin',
-    },
-    apiParams: {
-      //发送短信所需参数选项
-      type: Object,
-      default() {
-        return {};
-      },
-    },
+    remoteMethod: Function,
   },
   data() {
     return {
-      Attributes: {
-        smsCode: '',
-        disabled: true, //是否禁用
-      },
-      timeNumber: 10, //倒计时数值，单位s
+      timeNumber: 60, //倒计时数值，单位s
       timeAccount: 0,
       timeOpened: false, //倒计时是否开启
       timerId: null,
     };
   },
-  watch: {
-    value(newVal) {
-      this.Attributes.smsCode = newVal;
-    },
-    disabled(newVal) {
-      this.Attributes.disabled = newVal;
-    },
-  },
   mounted() {},
   methods: {
     clickOpt() {
       if (this.timeOpened) return;
-      this.sendSmsCode();
-      this.$emit('click');
-    },
-    async sendSmsCode() {
-      const response = await API[this.apiName](this.apiParams);
-      if (response) this.addTimeClock();
+      this.remoteMethod().then((res) => {
+        if (res) {
+          this.addTimeClock();
+        }
+      });
     },
     // 添加定时器
     addTimeClock() {
@@ -86,12 +58,6 @@ export default {
       this.$once('hook:beforeDestroy', () => {
         this.timerId && clearInterval(this.timerId);
       });
-    },
-    clear() {
-      this.Attributes.disabled = false;
-      this.timeOpened = false;
-      this.Attributes.smsCode = '';
-      this.timerId && clearInterval(this.timerId);
     },
   },
 };

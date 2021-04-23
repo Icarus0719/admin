@@ -25,10 +25,10 @@
       </el-form-item>
       <el-form-item prop="imageCode">
         <image-code
-          ref="imageCode"
           v-model="form.imageCode"
-          @change="getImageCodeData"
-        ></image-code>
+          :remote-method="getImageCode"
+          :image-url="imageCodeUrl"
+        />
       </el-form-item>
       <el-form-item prop="phone">
         <el-input v-model="form.phone" placeholder="请输入手机号" clearable>
@@ -36,16 +36,7 @@
         </el-input>
       </el-form-item>
       <el-form-item prop="verifCode">
-        <sms-code
-          ref="smsCode"
-          v-model="form.verifCode"
-          :disabled="err_imageCode || err_phone"
-          :api-params="{
-            phone: form.phone,
-            imageCode: form.imageCode,
-            imageId: form.imageId,
-          }"
-        ></sms-code>
+        <sms-code v-model="form.verifCode" :remote-method="sendSmsCode" />
       </el-form-item>
       <el-form-item>
         <el-button
@@ -53,7 +44,8 @@
           type="primary"
           @click="confirmForm"
           v-oneClick
-          > {{ $t("Login.button") }}</el-button
+        >
+          {{ $t('Login.button') }}</el-button
         >
       </el-form-item>
     </el-form>
@@ -70,27 +62,37 @@ export default {
   data() {
     return {
       form: {},
+      imageCodeUrl: '',
       formRules,
-      err_imageCode: true,
       err_phone: true,
     };
   },
-  watch: {
-    'form.imageCode'() {
-      this.$refs['form'].validateField('imageCode', (err) => {
-        this.err_imageCode = Boolean(err);
-      });
-    },
-    'form.phone'() {
-      this.$refs['form'].validateField('phone', (err) => {
-        this.err_phone = Boolean(err);
-      });
-    },
+  mounted() {
+    this.getImageCode();
   },
-  mounted() {},
   methods: {
-    getImageCodeData(data) {
-      this.$set(this.form, 'imageId', data.imageId);
+    async getImageCode() {
+      const imageId = new Date().getTime();
+      this.form.imageId = imageId;
+      const params = {
+        imageWidth: 90,
+        imageHeight: 40,
+        imageId: imageId,
+      };
+      const response = await API.getImageCode(params);
+      if (response) {
+        this.imageCodeUrl && window.URL.revokeObjectURL(this.imageCodeUrl);
+        this.imageCodeUrl = window.URL.createObjectURL(response);
+      }
+    },
+    async sendSmsCode() {
+      const { phone, imageCode, imageId } = this.form;
+      const response = await API.sendSmsCodeInLogin({
+        phone,
+        imageCode,
+        imageId,
+      });
+      if (response) return true;
     },
     confirmForm() {
       this.$refs['form'].validate(async (valid) => {
