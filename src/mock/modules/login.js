@@ -4,7 +4,7 @@ import Mock from 'mockjs';
 export function login() {
   return {
     isOpen: true,
-    url: '/sys/login',
+    url: '/login',
     type: 'post',
     data: {
       msg: 'success',

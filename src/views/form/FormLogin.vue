@@ -95,6 +95,7 @@ export default {
       if (response) return true;
     },
     confirmForm() {
+      this.submitModule();
       this.$refs['form'].validate(async (valid) => {
         if (!valid) return false;
         this.submitModule();
@@ -103,7 +104,7 @@ export default {
     async submitModule() {
       const params = {
         ...this.form,
-        password: this.$md5(this.form.password),
+        // password: this.$md5(this.form.password),
       };
       const response = await API.submitLogin(params);
       if (response) {

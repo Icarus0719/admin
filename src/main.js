@@ -15,7 +15,7 @@ import { eventBus } from '@/assets/js/eventBus.js';
 
 // 非生产环境，适配mockjs模拟
 if (process.env.NODE_ENV !== 'production') {
-  // require('@/mock');
+  require('@/mock');
 }
 Vue.prototype.$user = new UserInfo();
 Vue.prototype.$eventbus = eventBus;
