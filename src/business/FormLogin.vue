@@ -53,7 +53,7 @@
           type="primary"
           @click="confirmForm"
           v-oneClick
-          >登 录</el-button
+          > {{ $t("Login.button") }}</el-button
         >
       </el-form-item>
     </el-form>

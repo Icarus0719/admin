@@ -4,7 +4,7 @@ import router from './router';
 import store from './store';
 
 import '@/element-ui'
-import '@/element-ui-lang';
+import i18n from'@/element-ui-lang';
 import '@/assets/css/custom-base/index.less';
 import '@/assets/css/business/common.less';
 
@@ -25,5 +25,6 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
+  i18n,
   render: (h) => h(App),
 }).$mount('#app');
