@@ -25,48 +25,42 @@
   </div>
 </template>
 <script>
-import Header from "@/components/TheHeader.vue";
-import AsideMenu from "@/element-ui-libs/sg-aside-menu.vue";
-import Breadcrumb from "@/element-ui-libs/sg-breadcrumb.vue";
-import { superAdminPathList, changeLang } from "@/auth/routerTree.js";
-import { getRootNodesByTraversUp } from "@/utils/util.about.js";
+import Header from '@/components/TheHeader.vue';
+import AsideMenu from '@/element-ui-libs/sg-aside-menu.vue';
+import Breadcrumb from '@/element-ui-libs/sg-breadcrumb.vue';
+import { menuList } from '@/router/navMenuList.js';
+import { getRootNodesByTraversUp } from '@/utils/util.about.js';
 export default {
   components: {
     Header,
     AsideMenu,
     Breadcrumb,
   },
-  data () {
+  data() {
     return {
-      asideData: superAdminPathList,
+      asideData: menuList,
       isCollapse: false,
       breadData: [],
-      asideActivePath: "",
+      asideActivePath: '',
     };
   },
   watch: {
-    $route (to) {
+    $route(to) {
       this.initTreeData(to);
     },
-    "$i18n.locale" (newVal) {
-      if (newVal) {
-        this.asideData = changeLang();
-        this.initTreeData(this.$route);
-      }
-    },
   },
-  mounted () {
+  mounted() {
     this.initTreeData(this.$route);
   },
   methods: {
-    initTreeData (route) {
+    initTreeData(route) {
       const treeData = getRootNodesByTraversUp(
         this.asideData,
-        (e) => e.path === route.path
+        (e) => e.url === route.url
       );
       if (!treeData.length) return;
       this.breadData = treeData;
-      this.asideActivePath = treeData.slice(-1)[0].path;
+      this.asideActivePath = treeData.slice(-1)[0].url;
     },
   },
 };

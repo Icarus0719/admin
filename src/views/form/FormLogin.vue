@@ -24,7 +24,7 @@
         </el-input>
       </el-form-item>
       <el-form-item prop="imageCode">
-        <image-code
+        <ImageCode
           v-model="form.imageCode"
           :remote-method="getImageCode"
           :image-url="imageCodeUrl"
@@ -36,7 +36,7 @@
         </el-input>
       </el-form-item>
       <el-form-item prop="verifCode">
-        <sms-code v-model="form.verifCode" :remote-method="sendSmsCode" />
+        <SmsCode v-model="form.verifCode" :remote-method="sendSmsCode" />
       </el-form-item>
       <el-form-item>
         <el-button
@@ -68,7 +68,7 @@ export default {
     };
   },
   mounted() {
-    this.getImageCode();
+    // this.getImageCode();
   },
   methods: {
     async getImageCode() {
@@ -107,11 +107,13 @@ export default {
         // password: this.$md5(this.form.password),
       };
       const response = await API.submitLogin(params);
+      console.log(response);
       if (response) {
         this.$user.setInfo(response.data);
-        this.$router.push(`/index`);
+        console.log(1);
+        this.$router.push({ name: 'home' });
       } else {
-        this.$refs.imageCode.getImageCode();
+        this.getImageCode();
       }
     },
   },

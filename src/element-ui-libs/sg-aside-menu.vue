@@ -10,7 +10,7 @@
     text-color="#A6ADB4"
   >
     <slot></slot>
-    <sub-menu v-for="item in model" :model="item" :key="item.path"> </sub-menu>
+    <sub-menu v-for="item in model" :model="item" :key="item.url"> </sub-menu>
   </el-menu>
 </template>
 <script>

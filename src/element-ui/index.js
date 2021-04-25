@@ -12,14 +12,14 @@ import './custom-style/index.less';
 import Vue from 'vue';
 import {
   // Pagination,
-  // Dialog,
+  Dialog,
   // Autocomplete,
-  // Dropdown,
-  // DropdownMenu,
-  // DropdownItem,
-  // Menu,
-  // Submenu,
-  // MenuItem,
+  Dropdown,
+  DropdownMenu,
+  DropdownItem,
+  Menu,
+  Submenu,
+  MenuItem,
   // MenuItemGroup,
   Input,
   // InputNumber,
@@ -91,14 +91,14 @@ import {
 } from 'element-ui';
 
 // Vue.use(Pagination);
-// Vue.use(Dialog);
+Vue.use(Dialog);
 // Vue.use(Autocomplete);
-// Vue.use(Dropdown);
-// Vue.use(DropdownMenu);
-// Vue.use(DropdownItem);
-// Vue.use(Menu);
-// Vue.use(Submenu);
-// Vue.use(MenuItem);
+Vue.use(Dropdown);
+Vue.use(DropdownMenu);
+Vue.use(DropdownItem);
+Vue.use(Menu);
+Vue.use(Submenu);
+Vue.use(MenuItem);
 // Vue.use(MenuItemGroup);
 Vue.use(Input);
 // Vue.use(InputNumber);
