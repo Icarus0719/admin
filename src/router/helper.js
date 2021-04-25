@@ -1,6 +1,7 @@
 export const _import = (file) => {
   return () => import('@/views/' + file + '.vue');
 };
+
 /**
  *获取动态权限路由对象
  * @param {*} menuList 后台返回的权限列表树

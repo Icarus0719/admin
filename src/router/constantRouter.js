@@ -6,10 +6,4 @@ export const constantRouterMap = [
     meta: {},
     component: () => import('@/views/Login.vue'),
   },
-  {
-    path: '/404',
-    name: '404',
-    meta: {},
-    component: () => import('@/views/common/404.vue'),
-  },
 ];

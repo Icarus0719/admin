@@ -5,9 +5,7 @@
     <li class="user-item">
       <span class="el-icon-user sg-box-mr10"></span>
       <Dropdown :value="dropdownValue" :data="dropdownData" class="sg-box-mr10">
-        <div class="el-icon-edit dropdown-edit" @click="toPage">
-          &nbsp;{{ $t('User.edit') }}
-        </div>
+        <div class="el-icon-edit dropdown-edit" @click="toPage">&nbsp;编辑</div>
       </Dropdown>
       <span
         class="el-icon-switch-button pointer"

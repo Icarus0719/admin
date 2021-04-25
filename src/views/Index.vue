@@ -56,7 +56,7 @@ export default {
     initTreeData(route) {
       const treeData = getRootNodesByTraversUp(
         this.asideData,
-        (e) => e.url === route.url
+        (e) => e.url === route.path
       );
       if (!treeData.length) return;
       this.breadData = treeData;
