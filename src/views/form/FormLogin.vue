@@ -95,7 +95,6 @@ export default {
       if (response) return true;
     },
     confirmForm() {
-      this.submitModule();
       this.$refs['form'].validate(async (valid) => {
         if (!valid) return false;
         this.submitModule();

@@ -2,7 +2,7 @@
   <div>
     <el-upload
       ref="upload"
-      action="customize"
+      :action="action"
       :accept="accept"
       :limit="limit > 1 ? limit : 0"
       :on-change="fileChange"
@@ -14,7 +14,7 @@
       :disabled="disabled"
       :list-type="listType"
       :file-list="fileList"
-      :show-file-list="showFilelList"
+      :show-file-list="showFileList"
       :http-request="uploadMethod"
       class="sg-upload"
     >
@@ -30,150 +30,165 @@
           @click.self="disabled = true"
         >
           <span
-            class="el-icon-delete pointer sg-box-mr10"
+            class="el-icon-delete icon-delete"
             @click.stop="deleteFile"
           ></span>
           <span @click.self="disabled = true">|</span>
           <span
-            class="el-icon-edit pointer sg-box-ml10"
+            class="el-icon-edit icon-edit"
             @click.self="disabled = false"
           ></span>
         </div>
       </div>
       <!-- 上传文本按钮 -->
-      <div v-else class="el-icon-upload upload-button-text">上传文件</div>
+      <div v-else class="el-icon-upload2 upload-button-text">
+        &nbsp;{{ buttonText }}
+      </div>
     </el-upload>
     <slot name="tip"></slot>
   </div>
 </template>
 <script>
-import { Message } from 'element-ui';
+import { Message } from 'element-ui'
 export default {
   props: {
     value: Array, // 文件列表数据[{name,fileUrl,fileId}]
     size: {
       type: Number,
-      default: 2, // 文件允许的最大体积，单位:M
+      default: 100000 // 文件允许的最大体积，单位:M
     },
     accept: {
       type: String,
-      default: '.JPG,.PNG,.JPEG', // 文件格式
+      default: '.jpg,.png,.jpeg,.gif' // 文件格式
     },
     limit: {
       type: Number,
-      default: 1, // 最大允许上传个数
+      default: 1 // 最大允许上传个数
     },
     multiple: {
       type: Boolean,
-      default: false, // 是否支持多选文件
+      default: false // 是否支持多选文件
     },
-    showFilelList: {
+    showFileList: {
       type: Boolean,
-      default: false, // 是否显示上传文件列表
+      default: false // 是否显示上传文件列表
     },
     listType: {
       type: String,
-      default: 'text', // 文件列表的类型
+      default: 'text' // 文件列表的类型
     },
     autoUpload: {
       type: Boolean, // 是否在选取文件后立即进行上传
-      default: false,
+      default: true
     },
     httpRequest: {
-      type: Function, // 远程上传服务器函数,函数参数是file对象
+      type: Function // 远程上传服务器函数,函数参数是file对象
     },
+    buttonText: {
+      type: String,
+      default: '上传文件'
+    },
+    action: {
+      type: String,
+      default: ''
+    }
   },
   data() {
     return {
       fileType: 'picture', // 上传文件的类型
       fileList: [], // 上传的文件列表
       disabled: false, // 是否禁用上传
-      coverImageUrl: '', // 当前封面图片地址
-    };
+      coverImageUrl: '' // 当前封面图片地址
+    }
   },
   watch: {
     accept: {
       handler(newVal) {
         if (newVal.toLocaleLowerCase().search(/png|jpg|jpeg|gif|bmp$/) > -1) {
-          this.fileType = 'picture';
+          this.fileType = 'picture'
         } else {
-          this.fileType = 'text';
+          this.fileType = 'text'
         }
       },
-      immediate: true,
+      immediate: true
     },
     value(newVal) {
-      this.fileList = newVal;
+      this.fileList = newVal || []
     },
     fileList: {
       handler(newVal) {
-        if (this.fileType === 'picture' && this.limit === 1) {
+        if (newVal && this.fileType === 'picture' && this.limit === 1) {
           // 更新封面图片
-          this.coverImageUrl = '';
-          const lastFile = newVal.slice(-1)[0] || {};
+          this.coverImageUrl = ''
+          const lastFile = newVal.slice(-1)[0] || {}
           if (lastFile.fileUrl) {
-            this.coverImageUrl = lastFile.fileUrl;
+            this.coverImageUrl = lastFile.fileUrl
           }
           if (lastFile.raw) {
-            this.coverImageUrl = URL.createObjectURL(lastFile.raw);
+            this.coverImageUrl = URL.createObjectURL(lastFile.raw)
           }
         }
         // 定义双向绑定值
-        this.$emit('input', newVal);
+        this.$emit('input', newVal)
       },
-      deep: true,
-    },
+      deep: true
+    }
   },
-  mounted() {},
+  mounted() {
+    this.fileList = this.value
+  },
   methods: {
     handleExceed() {
-      Message.warning(`最多允许上传${this.limit}个文件`);
+      Message.warning(`最多允许上传${this.limit}个文件`)
     },
     handleRemove(file, fileList) {
-      this.fileList = fileList;
+      this.fileList = fileList
     },
     beforeUpload(file) {
-      return this._IsAcceptedFile(file);
+      return this._IsAcceptedFile(file)
     },
     uploadMethod(param) {
-      this.httpRequest(param.file);
+      if (!this.action) {
+        this.httpRequest(param.file)
+      }
     },
     fileChange(file, fileList) {
-      if (!this.autoUpload && !this._IsAcceptedFile(file)) return false;
-      this._HandleChange(file, fileList);
+      if (!this.autoUpload && !this._IsAcceptedFile(file)) return false
+      this._HandleChange(file, fileList)
     },
     // 选择文件之后控制文件列表和封面
     _HandleChange(file, fileList) {
-      this.fileList = fileList.slice(-this.limit);
+      this.fileList = fileList.slice(-this.limit)
     },
     // 上传文件校验
     _IsAcceptedFile(file, fileList) {
-      const formats = this.accept.toLocaleLowerCase().split(',');
-      const rightFile = formats.some((e) => {
-        return file.name.toLocaleLowerCase().search(e);
-      });
+      const formats = this.accept.toLocaleLowerCase().split(',')
+      let rightFile = formats.some((e) => {
+        return file.name.toLocaleLowerCase().search(e)
+      })
+      rightFile = this.accept ? rightFile : true
       if (!rightFile) {
-        Message({ message: '文件格式不正确', type: 'warning' });
-        fileList && fileList.pop();
-        return false;
+        Message({ message: '文件格式不正确', type: 'warning' })
+        fileList && fileList.pop()
+        return false
       }
       if (file.size / 1024 / 1024 > this.size) {
         Message({
           message: `文件大小不能超过${this.size}M`,
-          type: 'warning',
-        });
-        fileList && fileList.pop();
-        return false;
+          type: 'warning'
+        })
+        fileList && fileList.pop()
+        return false
       }
-      return true;
+      return true
     },
     deleteFile() {
-      this.fileList.pop();
-    },
-  },
-};
+      this.fileList.pop()
+    }
+  }
+}
 </script>
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .sg-upload {
   line-height: 0;
 }
@@ -202,7 +217,7 @@ export default {
   }
   &-text {
     color: rgba(0, 0, 0, 0.65);
-    width: 106px;
+    padding: 0 15px;
     height: 32px;
     line-height: 32px;
     text-align: center;
@@ -228,6 +243,14 @@ export default {
 
   &:hover {
     animation: uploadMask 1s linear forwards;
+  }
+  .icon-delete {
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  .icon-edit {
+    cursor: pointer;
+    margin-left: 10px;
   }
 }
 @keyframes uploadMask {

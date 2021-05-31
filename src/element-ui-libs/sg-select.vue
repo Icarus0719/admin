@@ -12,7 +12,7 @@
     @change="changeOpt"
     @visible-change="visibleOpt"
     :remote-method="remoteMethod"
-    clearable
+    :clearable="clearable"
     :disabled="disabled"
     :value-key="valueKey"
   >
@@ -64,7 +64,7 @@ export default {
     disabled: Boolean,
     multiple: {
       type: Boolean, // 是否支持多选
-      default: true,
+      default: false,
     },
     filterable: {
       type: Boolean, // 是否可搜索
@@ -84,10 +84,14 @@ export default {
     scrollMethod: {
       type: Function, // 无限滚动函数
     },
+    clearable: {
+      type: Boolean, // 是否清空
+      default: true,
+    },
   },
   data() {
     return {
-      selectValue: null,
+      selectValue: this.value,
       srcollDom: null,
       isToLower: false, // 滚动节流
       scrollHeight: 0,

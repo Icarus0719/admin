@@ -2,7 +2,7 @@
   <el-dialog
     :custom-class="customClass"
     :title="title"
-    :visible="visible"
+    :visible="value"
     :width="width"
     :show-close="showClose"
     :append-to-body="true"
@@ -20,10 +20,13 @@
 </template>
 <script>
 export default {
+  model: {
+    event: 'cancel',
+  },
   props: {
     customClass: String,
     title: String,
-    visible: {
+    value: {
       type: Boolean,
       default: false,
     },
@@ -49,9 +52,8 @@ export default {
       this.$emit('confirm');
     },
     dialogCancle() {
-      this.$emit('update:visible', false);
+      this.$emit('cancel', false);
     },
   },
 };
 </script>
-

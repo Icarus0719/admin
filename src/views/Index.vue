@@ -3,7 +3,7 @@
     <AsideMenu
       :model="asideData"
       :collapse="isCollapse"
-      :default-active="asideActivePath"
+      :default-active="$route.path"
       :style="{ width: isCollapse ? '64px' : '220px' }"
     >
       <div class="aside-logo" v-if="!isCollapse">后台管理系统</div>
@@ -17,7 +17,7 @@
           @click="isCollapse = !isCollapse"
         ></div>
       </Header>
-      <Breadcrumb :data="breadData"></Breadcrumb>
+      <Breadcrumb :data="breadData" />
       <div class="main-box">
         <router-view class="content-main" />
       </div>
@@ -41,7 +41,6 @@ export default {
       asideData: menuList,
       isCollapse: false,
       breadData: [],
-      asideActivePath: '',
     };
   },
   watch: {
@@ -60,7 +59,6 @@ export default {
       );
       if (!treeData.length) return;
       this.breadData = treeData;
-      this.asideActivePath = treeData.slice(-1)[0].url;
     },
   },
 };

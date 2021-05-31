@@ -229,3 +229,30 @@ export const debounce = (func, delay = 3000) => {
 //     }, delay)
 //   }
 // }
+/**
+ * @method dealThousands 处理千分位使用
+ * @param {*} value
+ * @param {*} n
+ */
+export const dealThousands = function(value, n) {
+  if (value === 0) {
+    return parseFloat(value).toFixed(n);
+  }
+  let num = '';
+  if (value != '') {
+    value = String(value); //转化成字符串
+    value = parseFloat(value.replace(/,/g, '')).toFixed(n); //若需要其他小数精度，可将2改成变量
+    if (value.indexOf('.') == -1) {
+      num = value.replace(/\d{1,3}(?=(\d{3})+$)/g, function(s) {
+        return s + ',';
+      });
+    } else {
+      num = value.replace(/(\d)(?=(\d{3})+\.)/g, function(s) {
+        return s + ',';
+      });
+    }
+  } else {
+    num = '';
+  }
+  return num;
+};

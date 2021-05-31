@@ -70,11 +70,5 @@ const getBlob = (url) => {
  * @param location 文件所在位置
  */
 export const loadFile = async location => {
-  // let xhr = new XMLHttpRequest(),
-  //   okStatus = document.location.protocol === "file:" ? 0 : 200;
-  // xhr.open('GET', location, true);
-  // // xhr.overrideMimeType("text/html;charset=utf-8"); //默认为utf-8
-  // xhr.send(null);
-  // return xhr.status === okStatus ? xhr.responseText : null;
   return await getBlob(location)
 }

@@ -55,7 +55,7 @@ router.beforeEach((to, from, next) => {
       // 根据用户角色获取匹配的路由列表
       const permissionList = user.getInfo().privList || menuList;
       asyncRoutes = addAsyncRoutes(permissionList);
-      mainRoutes.name="home-async"
+      mainRoutes.name = 'home-async';
       mainRoutes.children = asyncRoutes;
       mainRoutes.redirect = asyncRoutes.length ? asyncRoutes[0].path : '';
       router.addRoute(mainRoutes);
