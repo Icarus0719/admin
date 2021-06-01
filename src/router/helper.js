@@ -3,11 +3,11 @@ export const _import = (file) => {
 };
 
 /**
- *获取动态权限路由对象
+ *添加动态权限路由对象
  * @param {*} menuList 后台返回的权限列表树
+ * @param {*} permissionList 操作权限列表
  */
-export const addAsyncRoutes = (menuList) => {
-  const menuPaths = getMenuPathList(menuList);
+export const addAsyncRoutes = (menuList, permissionList = []) => {
   const newRoutes = addAsyncRoutesFunc(menuList);
   return newRoutes;
   // 获取动态路由对象
@@ -25,7 +25,7 @@ export const addAsyncRoutes = (menuList) => {
           name: url.replace('/', '-'),
           component: _import(`modules/${url}`) || null, // 默认页面组件的目录
           meta: {
-            permission: menuPaths, // meta属性--控制页面dom元素显隐，结合自定义指令
+            permission: permissionList, // 可结合自定义指令，完成显隐页面操作按钮
           },
         };
         routes.push(route);
@@ -36,18 +36,20 @@ export const addAsyncRoutes = (menuList) => {
     }
     return routes;
   }
-  // 获取动态路由的url数组
-  function getMenuPathList(menuList, newArr = []) {
-    menuList.forEach((e) => {
-      // ps:根据后台字段进行设置
-      let url = e.url;
-      if (url) {
-        newArr.push(url);
-      }
-      if (e.children && e.children.length) {
-        getMenuPathList(e.children, newArr);
-      }
-    });
-    return newArr;
-  }
 };
+
+export const hasCurrentRoute = (route, globalRoutes) => {
+  var temp = [];
+  for (var i = 0; i < globalRoutes.length; i++) {
+    if (route.path === globalRoutes[i].path) {
+      return true;
+    } else if (
+      globalRoutes[i].children &&
+      globalRoutes[i].children.length >= 1
+    ) {
+      temp = temp.concat(globalRoutes[i].children);
+    }
+  }
+  return temp.length >= 1 ? hasCurrentRoute(route, temp) : false;
+
+}

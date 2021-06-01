@@ -14,22 +14,22 @@
   </el-menu>
 </template>
 <script>
-import SubMenu from './sg-aside-sub-menu.vue';
+import SubMenu from './sg-aside-sub-menu.vue'
 export default {
   components: { SubMenu },
   props: {
     collapse: Boolean, // 是否水平折叠收起菜单
     uniqueOpened: {
       type: Boolean, // 是否只保持一个子菜单的展开
-      default: false,
+      default: false
     },
     model: {
       type: Array,
       default() {
-        return [];
-      },
+        return []
+      }
     },
-    defaultActive: String, // 当前激活菜单的 index
-  },
-};
+    defaultActive: String // 当前激活菜单的 index
+  }
+}
 </script>

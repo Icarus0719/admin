@@ -1,23 +1,21 @@
 <template>
   <div class="errorpage">
-    <img :src="errorImage" alt />
-    <p class="error-text">当前账号无任何权限，请重新登录</p>
-    <el-button type="primary" size="small" @click="toLogin">重新登录</el-button>
+    <div class="error-text">400</div>
+    <p class="error-tip">抱歉您访问的页面失联啦</p>
+    <el-button type="primary" size="small" @click="$router.go(-1)"
+      >请返回上一页</el-button
+    >
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      errorImage: "/static/images/404.png",
-    };
+      errorImage: '/static/images/404.png'
+    }
   },
-  methods: {
-    toLogin() {
-      this.$user.exitLogin();
-    },
-  },
-};
+  methods: {}
+}
 </script>
 <style lang="less" scoped>
 .errorpage {
@@ -30,19 +28,18 @@ export default {
   background: #011931;
   overflow: hidden;
   pad: 0 20px;
-  img {
-    width: 327px;
-    height: 270px;
-    max-width: 100%;
-    object-fit: contain;
+  color: #fff;
+  .error-text {
+    font-size: 140px;
   }
 }
 .bg-white {
   background: #fff;
 }
-.error-text {
+.error-tip {
   line-height: 56px;
-  color: #fff;
+  font-size: 16px;
+  color: #999;
 }
 </style>
 

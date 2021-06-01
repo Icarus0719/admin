@@ -28,7 +28,7 @@
 import Header from '@/components/TheHeader.vue';
 import AsideMenu from '@/element-ui-libs/sg-aside-menu.vue';
 import Breadcrumb from '@/element-ui-libs/sg-breadcrumb.vue';
-import { menuList } from '@/router/navMenuList.js';
+import { menuList } from '@/router/menuList.js';
 import { getRootNodesByTraversUp } from '@/utils/util.about.js';
 export default {
   components: {

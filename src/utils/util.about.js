@@ -204,7 +204,7 @@ export const deepClone = (obj) => {
  * @param {number} [delay=2000]
  */
 export const debounce = (func, delay = 3000) => {
-  return function() {
+  return function () {
     clearTimeout(func.timeId);
     func.timeId = setTimeout(() => {
       func.apply(this, arguments);
@@ -234,7 +234,7 @@ export const debounce = (func, delay = 3000) => {
  * @param {*} value
  * @param {*} n
  */
-export const dealThousands = function(value, n) {
+export const dealThousands = function (value, n) {
   if (value === 0) {
     return parseFloat(value).toFixed(n);
   }
@@ -243,11 +243,11 @@ export const dealThousands = function(value, n) {
     value = String(value); //转化成字符串
     value = parseFloat(value.replace(/,/g, '')).toFixed(n); //若需要其他小数精度，可将2改成变量
     if (value.indexOf('.') == -1) {
-      num = value.replace(/\d{1,3}(?=(\d{3})+$)/g, function(s) {
+      num = value.replace(/\d{1,3}(?=(\d{3})+$)/g, function (s) {
         return s + ',';
       });
     } else {
-      num = value.replace(/(\d)(?=(\d{3})+\.)/g, function(s) {
+      num = value.replace(/(\d)(?=(\d{3})+\.)/g, function (s) {
         return s + ',';
       });
     }
@@ -255,4 +255,35 @@ export const dealThousands = function(value, n) {
     num = '';
   }
   return num;
+};
+/**
+ *禁止放大缩小页面
+ */
+export const ForbidPageZoom = () => {
+  document.addEventListener('keydown', event => {
+    if ((event.ctrlKey === true || event.metaKey === true) &&
+      (event.which === 61 || event.which === 107 ||
+        event.which === 173 || event.which === 109 ||
+        event.which === 187 || event.which === 189)) {
+      event.preventDefault();
+    }
+  }, false);
+  // Chrome IE 360
+  window.addEventListener('mousewheel', event => {
+    if (event.ctrlKey === true || event.metaKey) {
+      event.preventDefault();
+    }
+  }, {
+    passive: false
+  });
+
+  //firefox
+  window.addEventListener('DOMMouseScroll', event => {
+    if (event.ctrlKey === true || event.metaKey) {
+      event.preventDefault();
+    }
+  }, {
+    passive: false
+  });
+
 };
