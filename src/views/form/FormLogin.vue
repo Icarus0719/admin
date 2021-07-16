@@ -45,17 +45,17 @@
           @click="confirmForm"
           v-oneClick
         >
-          {{ $t('Login.button') }}</el-button
-        >
+          登 录
+        </el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 <script>
-import API from '@/api/api';
-import { formRules } from '@/assets/js/formRules';
-import SmsCode from '@/element-ui-libs/sg-sms-code.vue';
-import ImageCode from '@/element-ui-libs/sg-image-code.vue';
+import API from '@/api/api'
+import { formRules } from '@/assets/js/formRules'
+import SmsCode from '@/element-ui-libs/sg-sms-code.vue'
+import ImageCode from '@/element-ui-libs/sg-image-code.vue'
 
 export default {
   components: { SmsCode, ImageCode },
@@ -64,59 +64,59 @@ export default {
       form: {},
       imageCodeUrl: '',
       formRules,
-      err_phone: true,
-    };
+      err_phone: true
+    }
   },
   mounted() {
     // this.getImageCode();
   },
   methods: {
     async getImageCode() {
-      const imageId = new Date().getTime();
-      this.form.imageId = imageId;
+      const imageId = new Date().getTime()
+      this.form.imageId = imageId
       const params = {
         imageWidth: 90,
         imageHeight: 40,
-        imageId: imageId,
-      };
-      const response = await API.getImageCode(params);
+        imageId: imageId
+      }
+      const response = await API.getImageCode(params)
       if (response) {
-        this.imageCodeUrl && window.URL.revokeObjectURL(this.imageCodeUrl);
-        this.imageCodeUrl = window.URL.createObjectURL(response);
+        this.imageCodeUrl && window.URL.revokeObjectURL(this.imageCodeUrl)
+        this.imageCodeUrl = window.URL.createObjectURL(response)
       }
     },
     async sendSmsCode() {
-      const { phone, imageCode, imageId } = this.form;
+      const { phone, imageCode, imageId } = this.form
       const response = await API.sendSmsCodeInLogin({
         phone,
         imageCode,
-        imageId,
-      });
-      if (response) return true;
+        imageId
+      })
+      if (response) return true
     },
     confirmForm() {
       this.$refs['form'].validate(async (valid) => {
-        if (!valid) return false;
-        this.submitModule();
-      });
+        if (!valid) return false
+        this.submitModule()
+      })
     },
     async submitModule() {
       const params = {
-        ...this.form,
+        ...this.form
         // password: this.$md5(this.form.password),
-      };
-      const response = await API.submitLogin(params);
-      console.log(response);
-      if (response) {
-        this.$user.setInfo(response.data);
-        console.log(1);
-        this.$router.push({ name: 'home' });
-      } else {
-        this.getImageCode();
       }
-    },
-  },
-};
+      const response = await API.submitLogin(params)
+      console.log(response)
+      if (response) {
+        this.$user.setInfo(response.data)
+        console.log(1)
+        this.$router.push({ name: 'home' })
+      } else {
+        this.getImageCode()
+      }
+    }
+  }
+}
 </script>
 <style lang="less" scoped>
 .form-login {

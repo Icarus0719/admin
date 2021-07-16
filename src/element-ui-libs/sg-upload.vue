@@ -55,7 +55,7 @@ export default {
     value: Array, // 文件列表数据[{name,fileUrl,fileId}]
     size: {
       type: Number,
-      default: 100000 // 文件允许的最大体积，单位:M
+      default: 20 // 文件允许的最大体积，单位:M
     },
     accept: {
       type: String,
@@ -148,16 +148,17 @@ export default {
       return this._IsAcceptedFile(file)
     },
     uploadMethod(param) {
-      if (!this.action) {
-        this.httpRequest(param.file)
-      }
+      this.httpRequest(param.file).then(() => {
+        this._HandleChange([param.file])
+      })
     },
     fileChange(file, fileList) {
-      if (!this.autoUpload && !this._IsAcceptedFile(file)) return false
-      this._HandleChange(file, fileList)
+      if (!this._IsAcceptedFile(file)) return
+      if (this.autoUpload) return
+      this._HandleChange(fileList)
     },
     // 选择文件之后控制文件列表和封面
-    _HandleChange(file, fileList) {
+    _HandleChange(fileList) {
       this.fileList = fileList.slice(-this.limit)
     },
     // 上传文件校验
@@ -188,7 +189,7 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .sg-upload {
   line-height: 0;
 }

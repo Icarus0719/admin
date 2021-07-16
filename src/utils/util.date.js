@@ -1,7 +1,7 @@
 /**
  * @method getMonthDates 获取当前日期所属月份的日期范围
  */
-export const getMonthDates = date => {
+export const getMonthDates = (date = new Date()) => {
   const curDate = new Date(date);
   let startDate = `${dateFormat(curDate, 'yyyy-MM')}-01`;
   let endDate = dateFormat(curDate, 'yyyy-MM');

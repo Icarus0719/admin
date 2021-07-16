@@ -10,50 +10,50 @@
     @close="dialogCancle"
   >
     <slot></slot>
-    <span slot="footer" v-if="showFooter">
-      <el-button size="small" type="primary" @click="confirmDialog" v-oneClick
-        >确定</el-button
-      >
+    <template slot="footer" v-if="showFooter">
+      <el-button size="small" type="primary" @click="confirmDialog" v-oneClick>
+        确定
+      </el-button>
       <el-button size="small" @click="dialogCancle">取消</el-button>
-    </span>
+    </template>
   </el-dialog>
 </template>
 <script>
 export default {
   model: {
-    event: 'cancel',
+    event: 'cancel'
   },
   props: {
     customClass: String,
     title: String,
     value: {
       type: Boolean,
-      default: false,
+      default: false
     },
     showClose: {
       type: Boolean,
-      default: false,
+      default: false
     },
     showFooter: {
       type: Boolean, //是否显示底部操作按钮
-      default: true,
+      default: true
     },
     width: {
       type: String,
-      default: '400px',
-    },
+      default: '400px'
+    }
   },
   data() {
-    return {};
+    return {}
   },
   methods: {
     confirmDialog() {
-      this.dialogCancle();
-      this.$emit('confirm');
+      this.dialogCancle()
+      this.$emit('confirm')
     },
     dialogCancle() {
-      this.$emit('cancel', false);
-    },
-  },
-};
+      this.$emit('cancel', false)
+    }
+  }
+}
 </script>

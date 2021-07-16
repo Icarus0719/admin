@@ -102,6 +102,22 @@ export const groupArrayByValue = (array, f) => {
   return newArray;
 };
 /**
+ * @method groupBy 数组对象分组
+ * @param array 数组
+ * @param f 回调函数，e=>e.key
+ */
+export const groupBy = (array, f) => {
+  let groups = {};
+  array.forEach(function (o) {
+    let group = JSON.stringify(f(o));
+    groups[group] = groups[group] || [];
+    groups[group].push(o);
+  });
+  return Object.keys(groups).map(function (group) {
+    return groups[group];
+  });
+}
+/**
  * @method handlePhone 手机号脱敏
  */
 export const handlePhone = (str) => {
@@ -213,7 +229,7 @@ export const debounce = (func, delay = 3000) => {
 };
 
 /**
- *节流：单位事件内多次触发事件，只执行一次回调
+ *节流：单位时间内多次触发事件，只执行一次回调
  *场景：鼠标不断点击，只触发一次、无限加载滚动页面时，每隔一段时间发送ajax
  * @param {*} func
  * @param {number} [delay=2000]
